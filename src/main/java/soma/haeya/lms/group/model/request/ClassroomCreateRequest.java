@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-public class CreateClassroomRequest {
+public class ClassroomCreateRequest {
 
     private final Long userId;
     private final String name;

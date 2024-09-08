@@ -5,13 +5,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import soma.haeya.lms.group.config.argumentresolver.CreateClassroomArgumentResolver;
+import soma.haeya.lms.group.config.argumentresolver.ClassroomCreateArgumentResolver;
 
 @Configuration
 @RequiredArgsConstructor
 public class WebConfig implements WebMvcConfigurer {
 
-    private final CreateClassroomArgumentResolver createClassroomArgumentResolver;
+    private final ClassroomCreateArgumentResolver createClassroomArgumentResolver;
 
     @Override
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {

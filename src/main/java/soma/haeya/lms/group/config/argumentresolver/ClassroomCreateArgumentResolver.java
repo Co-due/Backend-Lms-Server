@@ -11,14 +11,14 @@ import org.springframework.web.bind.support.WebDataBinderFactory;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
-import soma.haeya.lms.group.model.request.CreateClassroomRequest;
+import soma.haeya.lms.group.model.request.ClassroomCreateRequest;
 
 @Component
-public class CreateClassroomArgumentResolver implements HandlerMethodArgumentResolver {
+public class ClassroomCreateArgumentResolver implements HandlerMethodArgumentResolver {
 
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
-        return parameter.getParameterType().equals(CreateClassroomRequest.class);
+        return parameter.getParameterType().equals(ClassroomCreateRequest.class);
     }
 
     @Override
@@ -31,7 +31,7 @@ public class CreateClassroomArgumentResolver implements HandlerMethodArgumentRes
         Long userId = extractUserIdFromHeader(request);
         String name = extractNameFromBody(request);
 
-        return new CreateClassroomRequest(userId, name);
+        return new ClassroomCreateRequest(userId, name);
     }
 
     private Long extractUserIdFromHeader(HttpServletRequest request) {
