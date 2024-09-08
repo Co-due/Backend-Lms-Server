@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.core.MethodParameter;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
@@ -14,7 +15,10 @@ import org.springframework.web.method.support.ModelAndViewContainer;
 import soma.haeya.lms.group.model.request.ClassroomCreateRequest;
 
 @Component
+@RequiredArgsConstructor
 public class ClassroomCreateArgumentResolver implements HandlerMethodArgumentResolver {
+
+    private final ObjectMapper mapper;
 
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
@@ -49,8 +53,7 @@ public class ClassroomCreateArgumentResolver implements HandlerMethodArgumentRes
     }
 
     private String extractNameFromBody(HttpServletRequest request) throws IOException {
-        ObjectMapper objectMapper = new ObjectMapper();
-        JsonNode root = objectMapper.readTree(request.getInputStream());
+        JsonNode root = mapper.readTree(request.getInputStream());
         return root.path("name").asText();
     }
 }
