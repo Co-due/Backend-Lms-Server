@@ -2,6 +2,7 @@ package soma.haeya.lms.group.exception;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,9 +14,10 @@ import soma.haeya.lms.common.model.response.DefaultErrorResponse;
 
 @Slf4j
 @RestControllerAdvice
+@RequiredArgsConstructor
 public class DbServerExceptionHandler {
 
-    private final ObjectMapper mapper = new ObjectMapper();
+    private final ObjectMapper mapper;
 
     @ExceptionHandler(value = HttpClientErrorException.class)
     public ResponseEntity<DefaultErrorResponse> handle4xxError(
