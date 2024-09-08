@@ -1,13 +1,13 @@
-package soma.haeya.lms.group.controller;
+package soma.haeya.lms.classroom.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import soma.haeya.lms.classroom.model.request.ClassroomCreateRequest;
+import soma.haeya.lms.classroom.service.ClassroomService;
 import soma.haeya.lms.common.model.response.DefaultSuccessResponse;
-import soma.haeya.lms.group.model.request.ClassroomCreateRequest;
-import soma.haeya.lms.group.service.ClassroomService;
 
 @RestController
 @RequiredArgsConstructor

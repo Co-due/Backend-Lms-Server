@@ -1,4 +1,4 @@
-package soma.haeya.lms.group.config.argumentresolver;
+package soma.haeya.lms.classroom.config.argumentresolver;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -12,7 +12,7 @@ import org.springframework.web.bind.support.WebDataBinderFactory;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
-import soma.haeya.lms.group.model.request.ClassroomCreateRequest;
+import soma.haeya.lms.classroom.model.request.ClassroomCreateRequest;
 
 @Component
 @RequiredArgsConstructor

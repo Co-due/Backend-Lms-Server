@@ -1,11 +1,11 @@
-package soma.haeya.lms.group.config;
+package soma.haeya.lms.classroom.config;
 
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import soma.haeya.lms.group.config.argumentresolver.ClassroomCreateArgumentResolver;
+import soma.haeya.lms.classroom.config.argumentresolver.ClassroomCreateArgumentResolver;
 
 @Configuration
 @RequiredArgsConstructor

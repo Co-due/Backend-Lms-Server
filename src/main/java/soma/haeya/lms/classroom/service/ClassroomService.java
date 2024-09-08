@@ -1,9 +1,9 @@
-package soma.haeya.lms.group.service;
+package soma.haeya.lms.classroom.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import soma.haeya.lms.group.client.ClassroomApiClient;
-import soma.haeya.lms.group.model.request.ClassroomCreateRequest;
+import soma.haeya.lms.classroom.client.ClassroomApiClient;
+import soma.haeya.lms.classroom.model.request.ClassroomCreateRequest;
 
 @Service
 @RequiredArgsConstructor

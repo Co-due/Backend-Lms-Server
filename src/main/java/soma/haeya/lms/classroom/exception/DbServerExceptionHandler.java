@@ -1,4 +1,4 @@
-package soma.haeya.lms.group.exception;
+package soma.haeya.lms.classroom.exception;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

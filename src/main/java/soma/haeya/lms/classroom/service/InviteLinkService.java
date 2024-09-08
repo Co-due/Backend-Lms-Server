@@ -1,4 +1,4 @@
-package soma.haeya.lms.group.service;
+package soma.haeya.lms.classroom.service;
 
 import org.springframework.stereotype.Service;
 
