@@ -1,12 +1,12 @@
 package soma.haeya.lms.common.model.response;
 
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.NoArgsConstructor;
 
 @Getter
-@RequiredArgsConstructor
+@NoArgsConstructor
 public class DefaultErrorResponse {
 
-    private final String message;
+    private String message;
 
 }

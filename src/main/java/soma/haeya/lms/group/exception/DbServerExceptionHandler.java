@@ -1,7 +1,5 @@
 package soma.haeya.lms.group.exception;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -17,47 +15,26 @@ import soma.haeya.lms.common.model.response.DefaultErrorResponse;
 @RequiredArgsConstructor
 public class DbServerExceptionHandler {
 
-    private final ObjectMapper mapper;
-
     @ExceptionHandler(value = HttpClientErrorException.class)
     public ResponseEntity<DefaultErrorResponse> handle4xxError(
         HttpClientErrorException exception
     ) {
-        String message = extractMessage(exception.getMessage());
+        DefaultErrorResponse errorResponse = exception.getResponseBodyAs(DefaultErrorResponse.class);
 
         return ResponseEntity
             .status(exception.getStatusCode())
-            .body(new DefaultErrorResponse(message));
+            .body(errorResponse);
     }
 
     @ExceptionHandler(value = HttpServerErrorException.class)
     public ResponseEntity<DefaultErrorResponse> handle5xxError(
         HttpServerErrorException exception
     ) {
-        String message = extractMessage(exception.getMessage());
+        DefaultErrorResponse errorResponse = exception.getResponseBodyAs(DefaultErrorResponse.class);
 
         return ResponseEntity
             .status(HttpStatus.BAD_REQUEST)
-            .body(new DefaultErrorResponse(message));
+            .body(errorResponse);
     }
 
-    public String extractMessage(String errorString) {
-        try {
-            int jsonStart = errorString.indexOf(": ") + 2;
-            String jsonPart = errorString.substring(jsonStart);
-
-            jsonPart = jsonPart.substring(1, jsonPart.length() - 1);
-
-            JsonNode jsonNode = mapper.readTree(jsonPart);
-
-            if (jsonNode.has("message")) {
-                return jsonNode.get("message").asText();
-            } else {
-                return "Empty message";
-            }
-
-        } catch (Exception e) {
-            return "Failed to extract message: " + e.getMessage();
-        }
-    }
 }
