@@ -8,10 +8,10 @@ import soma.haeya.lms.classroom.model.request.ClassroomCreateRequest;
 import soma.haeya.lms.student.model.request.RegisterStudentRequest;
 
 @Component
-@HttpExchange("/v1/classroom")
+@HttpExchange("/v1")
 public interface DbServerApiClient {
 
-    @PostExchange
+    @PostExchange("/classroom")
     void createClassroom(@RequestBody ClassroomCreateRequest createClassroomRequest);
 
     @PostExchange("/student")
