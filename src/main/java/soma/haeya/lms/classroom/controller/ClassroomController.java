@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import soma.haeya.lms.classroom.model.request.ClassroomCreateRequest;
 import soma.haeya.lms.classroom.service.ClassroomService;
-import soma.haeya.lms.common.config.argumentresolver.UserId;
+import soma.haeya.lms.common.config.advice.UserId;
 import soma.haeya.lms.common.model.response.SuccessResponse;
 
 @RestController

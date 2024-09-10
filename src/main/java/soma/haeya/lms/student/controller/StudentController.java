@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import soma.haeya.lms.common.config.argumentresolver.UserId;
+import soma.haeya.lms.common.config.advice.UserId;
 import soma.haeya.lms.common.model.response.SuccessResponse;
 import soma.haeya.lms.student.model.request.RegisterStudentRequest;
 import soma.haeya.lms.student.service.StudentService;

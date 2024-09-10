@@ -1,4 +1,4 @@
-package soma.haeya.lms.common.config.argumentresolver;
+package soma.haeya.lms.common.config.advice;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;

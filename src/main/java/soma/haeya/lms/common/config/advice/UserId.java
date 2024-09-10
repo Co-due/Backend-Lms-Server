@@ -1,4 +1,4 @@
-package soma.haeya.lms.common.config.argumentresolver;
+package soma.haeya.lms.common.config.advice;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
