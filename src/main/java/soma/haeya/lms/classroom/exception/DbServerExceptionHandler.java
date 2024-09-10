@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.HttpServerErrorException;
-import soma.haeya.lms.common.model.response.DefaultErrorResponse;
+import soma.haeya.lms.common.model.response.ErrorResponse;
 
 @Slf4j
 @RestControllerAdvice
@@ -16,10 +16,10 @@ import soma.haeya.lms.common.model.response.DefaultErrorResponse;
 public class DbServerExceptionHandler {
 
     @ExceptionHandler(value = HttpClientErrorException.class)
-    public ResponseEntity<DefaultErrorResponse> handle4xxError(
+    public ResponseEntity<ErrorResponse> handle4xxError(
         HttpClientErrorException exception
     ) {
-        DefaultErrorResponse errorResponse = exception.getResponseBodyAs(DefaultErrorResponse.class);
+        ErrorResponse errorResponse = exception.getResponseBodyAs(ErrorResponse.class);
 
         return ResponseEntity
             .status(exception.getStatusCode())
@@ -27,10 +27,10 @@ public class DbServerExceptionHandler {
     }
 
     @ExceptionHandler(value = HttpServerErrorException.class)
-    public ResponseEntity<DefaultErrorResponse> handle5xxError(
+    public ResponseEntity<ErrorResponse> handle5xxError(
         HttpServerErrorException exception
     ) {
-        DefaultErrorResponse errorResponse = exception.getResponseBodyAs(DefaultErrorResponse.class);
+        ErrorResponse errorResponse = exception.getResponseBodyAs(ErrorResponse.class);
 
         return ResponseEntity
             .status(HttpStatus.BAD_REQUEST)

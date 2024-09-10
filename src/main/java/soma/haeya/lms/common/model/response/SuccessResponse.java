@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-public class DefaultSuccessResponse {
+public class SuccessResponse {
 
     private final String message;
 
