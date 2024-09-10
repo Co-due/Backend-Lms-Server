@@ -2,6 +2,7 @@ package soma.haeya.lms.classroom.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import soma.haeya.lms.classroom.model.response.MyClassroomWithCountResponse;
 import soma.haeya.lms.classroom.models.request.ClassroomCreateRequest;
 import soma.haeya.lms.classroom.models.response.ClassroomResponse;
 import soma.haeya.lms.common.client.DbServerApiClient;
@@ -18,5 +19,10 @@ public class ClassroomService {
         createClassroomRequest.createInviteLink(inviteLink);
 
         return dbServerApiClient.createClassroom(createClassroomRequest);
+    }
+
+    public MyClassroomWithCountResponse getMyClassrooms(Long userId) {
+
+        return dbServerApiClient.getMyClassrooms(userId);
     }
 }
