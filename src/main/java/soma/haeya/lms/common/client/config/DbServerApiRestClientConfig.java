@@ -12,7 +12,7 @@ import soma.haeya.lms.common.client.DbServerApiClient;
 public class DbServerApiRestClientConfig {
 
     @Bean
-    public DbServerApiClient DbServerApiRestClient(
+    public DbServerApiClient dbServerApiRestClient(
         @Value("${server-url.db-server}") String dbUrl
     ) {
         RestClient restClient = RestClient.builder()
