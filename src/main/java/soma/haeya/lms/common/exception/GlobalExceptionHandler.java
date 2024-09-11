@@ -1,4 +1,4 @@
-package soma.haeya.lms.classroom.exception;
+package soma.haeya.lms.common.exception;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -13,12 +13,10 @@ import soma.haeya.lms.common.model.response.ErrorResponse;
 @Slf4j
 @RestControllerAdvice
 @RequiredArgsConstructor
-public class DbServerExceptionHandler {
+public class GlobalExceptionHandler {
 
     @ExceptionHandler(value = HttpClientErrorException.class)
-    public ResponseEntity<ErrorResponse> handle4xxError(
-        HttpClientErrorException exception
-    ) {
+    public ResponseEntity<ErrorResponse> handle4xxError(HttpClientErrorException exception) {
         ErrorResponse errorResponse = exception.getResponseBodyAs(ErrorResponse.class);
 
         return ResponseEntity
@@ -27,13 +25,20 @@ public class DbServerExceptionHandler {
     }
 
     @ExceptionHandler(value = HttpServerErrorException.class)
-    public ResponseEntity<ErrorResponse> handle5xxError(
-        HttpServerErrorException exception
-    ) {
+    public ResponseEntity<ErrorResponse> handle5xxError(HttpServerErrorException exception) {
         ErrorResponse errorResponse = exception.getResponseBodyAs(ErrorResponse.class);
 
         return ResponseEntity
             .status(HttpStatus.BAD_REQUEST)
+            .body(errorResponse);
+    }
+
+    @ExceptionHandler(value = UserServerException.class)
+    public ResponseEntity<ErrorResponse> handleUserServerException(UserServerException exception) {
+        ErrorResponse errorResponse = new ErrorResponse(exception.getMessage());
+
+        return ResponseEntity
+            .status(exception.getHttpStatus())
             .body(errorResponse);
     }
 

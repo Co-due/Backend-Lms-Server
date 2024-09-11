@@ -1,4 +1,4 @@
-package soma.haeya.lms.classroom.client.config;
+package soma.haeya.lms.common.client.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -6,13 +6,13 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.RestClient;
 import org.springframework.web.client.support.RestClientAdapter;
 import org.springframework.web.service.invoker.HttpServiceProxyFactory;
-import soma.haeya.lms.classroom.client.ClassroomApiClient;
+import soma.haeya.lms.common.client.DbServerApiClient;
 
 @Configuration
-public class ClassroomApiRestClientConfig {
+public class DbServerApiRestClientConfig {
 
     @Bean
-    public ClassroomApiClient classroomApiClient(
+    public DbServerApiClient dbServerApiRestClient(
         @Value("${server-url.db-server}") String dbUrl
     ) {
         RestClient restClient = RestClient.builder()
@@ -24,6 +24,6 @@ public class ClassroomApiRestClientConfig {
             .builderFor(adapter)
             .build();
 
-        return factory.createClient(ClassroomApiClient.class);
+        return factory.createClient(DbServerApiClient.class);
     }
 }
