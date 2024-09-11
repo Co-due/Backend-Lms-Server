@@ -32,24 +32,16 @@ public class UserIdRequestBodyAdvice implements RequestBodyAdvice {
     @Override
     @NonNull
     public HttpInputMessage beforeBodyRead(
-        HttpInputMessage inputMessage,
+        @NonNull HttpInputMessage inputMessage,
         @NonNull MethodParameter parameter,
         @NonNull Type targetType,
         @NonNull Class<? extends HttpMessageConverter<?>> converterType
     ) throws IOException {
-        // header 꺼내오기
-        String userIdHeader = inputMessage.getHeaders().getFirst("X-User-Id");
-        if (userIdHeader == null) {
-            throw new IllegalArgumentException("X-User-Id header가 없습니다");
-        }
-        Long userId = Long.parseLong(userIdHeader);
+        // header에서 UserId 꺼내오기
+        Long userId = extractUserIdFromHeader(inputMessage);
 
-        // 매핑 클래스에 userId 필드가 있는지 확인
-        Class<?> targetClass = (Class<?>) targetType;
-        boolean hasUserIdField = Arrays.stream(targetClass.getDeclaredFields())
-            .anyMatch(field -> field.getName().equals(USER_ID_FIELD_NAME));
-
-        if (!hasUserIdField) {
+        // 매핑 클래스에 userId 필드가 없으면 기존 요청 반환
+        if (!checkUserIdFieldInTargetClass(targetType)) {
             return inputMessage;
         }
 
@@ -64,6 +56,21 @@ public class UserIdRequestBodyAdvice implements RequestBodyAdvice {
         InputStream modifiedBodyStream = new ByteArrayInputStream(mapper.writeValueAsBytes(bodyNode));
 
         return new CustomHttpInputMessage(inputMessage.getHeaders(), modifiedBodyStream);
+    }
+
+    private Long extractUserIdFromHeader(HttpInputMessage inputMessage) {
+        String userIdHeader = inputMessage.getHeaders().getFirst("X-User-Id");
+        if (userIdHeader == null) {
+            throw new IllegalArgumentException("X-User-Id header가 없습니다");
+        }
+        return Long.parseLong(userIdHeader);
+    }
+
+    private boolean checkUserIdFieldInTargetClass(Type targetType) {
+        Class<?> targetClass = (Class<?>) targetType;
+
+        return Arrays.stream(targetClass.getDeclaredFields())
+            .anyMatch(field -> field.getName().equals(USER_ID_FIELD_NAME));
     }
 
     @Override
