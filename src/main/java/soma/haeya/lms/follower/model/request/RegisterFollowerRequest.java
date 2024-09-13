@@ -1,4 +1,4 @@
-package soma.haeya.lms.student.model.request;
+package soma.haeya.lms.follower.model.request;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
@@ -6,7 +6,7 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-public class RegisterStudentRequest {
+public class RegisterFollowerRequest {
 
     @NotNull
     private final Long classroomId;
