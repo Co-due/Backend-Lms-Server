@@ -11,6 +11,6 @@ public class RegisterGuestRequest {
     @NotNull
     private final Long classroomId;
     @NotNull
-    private final Long userId;
+    private final Long accountId;
 
 }

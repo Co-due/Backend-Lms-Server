@@ -18,15 +18,15 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestBodyAdvice;
 
 @RestControllerAdvice
 @RequiredArgsConstructor
-public class UserIdRequestBodyAdvice implements RequestBodyAdvice {
+public class AccountIdRequestBodyAdvice implements RequestBodyAdvice {
 
     private final ObjectMapper mapper;
-    private static final String USER_ID_FIELD_NAME = "userId";
+    private static final String USER_ID_FIELD_NAME = "accountId";
 
     @Override
     public boolean supports(MethodParameter methodParameter, @NonNull Type targetType,
         @NonNull Class<? extends HttpMessageConverter<?>> converterType) {
-        return methodParameter.hasParameterAnnotation(UserId.class);
+        return methodParameter.hasParameterAnnotation(AccountId.class);
     }
 
     @Override
@@ -37,19 +37,19 @@ public class UserIdRequestBodyAdvice implements RequestBodyAdvice {
         @NonNull Type targetType,
         @NonNull Class<? extends HttpMessageConverter<?>> converterType
     ) throws IOException {
-        // header에서 UserId 꺼내오기
-        Long userId = extractUserIdFromHeader(inputMessage);
+        // header에서 accountId 꺼내오기
+        Long accountId = extractAccountIdFromHeader(inputMessage);
 
-        // 매핑 클래스에 userId 필드가 없으면 기존 요청 반환
-        if (!checkUserIdFieldInTargetClass(targetType)) {
+        // 매핑 클래스에 accountId 필드가 없으면 기존 요청 반환
+        if (!checkAccountIdFieldInTargetClass(targetType)) {
             return inputMessage;
         }
 
-        // body에 userId 추가
+        // body에 accountId 추가
         JsonNode bodyNode = mapper.readTree(inputMessage.getBody());
 
         if (bodyNode instanceof ObjectNode) {
-            ((ObjectNode) bodyNode).put(USER_ID_FIELD_NAME, userId);
+            ((ObjectNode) bodyNode).put(USER_ID_FIELD_NAME, accountId);
         }
 
         // 4. 수정된 body와 함께 새로운 HttpInputMessage 반환
@@ -58,15 +58,15 @@ public class UserIdRequestBodyAdvice implements RequestBodyAdvice {
         return new CustomHttpInputMessage(inputMessage.getHeaders(), modifiedBodyStream);
     }
 
-    private Long extractUserIdFromHeader(HttpInputMessage inputMessage) {
-        String userIdHeader = inputMessage.getHeaders().getFirst("X-User-Id");
-        if (userIdHeader == null) {
-            throw new IllegalArgumentException("X-User-Id header가 없습니다");
+    private Long extractAccountIdFromHeader(HttpInputMessage inputMessage) {
+        String accountIdHeader = inputMessage.getHeaders().getFirst("X-Account-Id");
+        if (accountIdHeader == null) {
+            throw new IllegalArgumentException("X-Account-Id header가 없습니다");
         }
-        return Long.parseLong(userIdHeader);
+        return Long.parseLong(accountIdHeader);
     }
 
-    private boolean checkUserIdFieldInTargetClass(Type targetType) {
+    private boolean checkAccountIdFieldInTargetClass(Type targetType) {
         Class<?> targetClass = (Class<?>) targetType;
 
         return Arrays.stream(targetClass.getDeclaredFields())
