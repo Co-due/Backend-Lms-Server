@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.HttpServerErrorException;
-import soma.haeya.lms.common.model.response.ErrorResponse;
+import soma.haeya.lms.common.models.response.ErrorResponse;
 
 @Slf4j
 @RestControllerAdvice

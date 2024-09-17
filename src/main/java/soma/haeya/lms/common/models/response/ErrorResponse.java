@@ -1,4 +1,4 @@
-package soma.haeya.lms.common.model.response;
+package soma.haeya.lms.common.models.response;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

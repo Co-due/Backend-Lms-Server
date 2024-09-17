@@ -3,7 +3,7 @@ package soma.haeya.lms.guest.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import soma.haeya.lms.common.client.DbServerApiClient;
-import soma.haeya.lms.guest.model.request.RegisterGuestRequest;
+import soma.haeya.lms.guest.models.request.RegisterGuestRequest;
 
 @Service
 @RequiredArgsConstructor

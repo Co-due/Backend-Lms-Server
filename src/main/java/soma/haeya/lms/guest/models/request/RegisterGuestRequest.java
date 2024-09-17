@@ -1,4 +1,4 @@
-package soma.haeya.lms.guest.model.request;
+package soma.haeya.lms.guest.models.request;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;

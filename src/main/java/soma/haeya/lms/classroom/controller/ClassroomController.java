@@ -6,10 +6,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import soma.haeya.lms.classroom.model.request.ClassroomCreateRequest;
+import soma.haeya.lms.classroom.models.request.ClassroomCreateRequest;
 import soma.haeya.lms.classroom.service.ClassroomService;
 import soma.haeya.lms.common.config.advice.AccountId;
-import soma.haeya.lms.common.model.response.SuccessResponse;
+import soma.haeya.lms.common.models.response.SuccessResponse;
 
 @RestController
 @RequiredArgsConstructor
