@@ -5,8 +5,7 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-public class SuccessResponse {
+public class SuccessResponse<T> {
 
-    private final String message;
-
+    private final T data;
 }

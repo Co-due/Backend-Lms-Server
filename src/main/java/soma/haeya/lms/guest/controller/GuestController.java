@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import soma.haeya.lms.common.config.advice.AccountId;
 import soma.haeya.lms.common.models.response.SuccessResponse;
 import soma.haeya.lms.guest.models.request.RegisterGuestRequest;
+import soma.haeya.lms.guest.models.response.ClassroomAccountResponse;
 import soma.haeya.lms.guest.service.GuestService;
 
 @RestController
@@ -19,11 +20,11 @@ public class GuestController {
     private final GuestService guestService;
 
     @PostMapping
-    public ResponseEntity<SuccessResponse> registerGuest(
+    public ResponseEntity<SuccessResponse<ClassroomAccountResponse>> registerGuest(
         @AccountId @RequestBody RegisterGuestRequest registerGuestRequest
     ) {
-        guestService.registerGuest(registerGuestRequest);
+        ClassroomAccountResponse classroomAccountResponse = guestService.registerGuest(registerGuestRequest);
 
-        return ResponseEntity.ok(new SuccessResponse("클래스룸에 참여했습니다."));
+        return ResponseEntity.ok(new SuccessResponse<>(classroomAccountResponse));
     }
 }
