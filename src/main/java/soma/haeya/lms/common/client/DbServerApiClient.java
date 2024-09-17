@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.service.annotation.HttpExchange;
 import org.springframework.web.service.annotation.PostExchange;
 import soma.haeya.lms.classroom.model.request.ClassroomCreateRequest;
-import soma.haeya.lms.follower.model.request.RegisterFollowerRequest;
+import soma.haeya.lms.guest.model.request.RegisterGuestRequest;
 
 @Component
 @HttpExchange("/v1")
@@ -15,6 +15,6 @@ public interface DbServerApiClient {
     void createClassroom(@RequestBody ClassroomCreateRequest createClassroomRequest);
 
     @PostExchange("/classroom-account")
-    void registerFollower(@RequestBody RegisterFollowerRequest registerFollowerRequest);
+    void registerGuest(@RequestBody RegisterGuestRequest registerGuestRequest);
 
 }

@@ -8,21 +8,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import soma.haeya.lms.common.config.advice.UserId;
 import soma.haeya.lms.common.model.response.SuccessResponse;
-import soma.haeya.lms.follower.model.request.RegisterFollowerRequest;
-import soma.haeya.lms.follower.service.FollowerService;
+import soma.haeya.lms.guest.model.request.RegisterGuestRequest;
+import soma.haeya.lms.guest.service.GuestService;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/v1/follower")
-public class FollowerController {
+@RequestMapping("/v1/guest")
+public class GuestController {
 
-    private final FollowerService followerService;
+    private final GuestService guestService;
 
     @PostMapping
-    public ResponseEntity<SuccessResponse> registerFollower(
-        @UserId @RequestBody RegisterFollowerRequest registerFollowerRequest
+    public ResponseEntity<SuccessResponse> registerGuest(
+        @UserId @RequestBody RegisterGuestRequest registerGuestRequest
     ) {
-        followerService.registerFollower(registerFollowerRequest);
+        guestService.registerGuest(registerGuestRequest);
 
         return ResponseEntity.ok(new SuccessResponse("클래스룸에 참여했습니다."));
     }
