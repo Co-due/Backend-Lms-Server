@@ -1,4 +1,4 @@
-package soma.haeya.lms.common.config.advice;
+package soma.haeya.lms._config.advice;
 
 import java.io.InputStream;
 import lombok.NonNull;
