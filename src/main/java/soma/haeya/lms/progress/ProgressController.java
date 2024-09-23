@@ -24,7 +24,6 @@ public class ProgressController {
 
     @GetMapping(value = "/connect/{classroomId}", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     public ResponseEntity<SseEmitter> connect(@PathVariable String classroomId) {
-
         SseEmitter connection = subscribeService.subscribe(classroomId);
 
         return ResponseEntity.ok(connection);
