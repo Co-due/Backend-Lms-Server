@@ -35,7 +35,7 @@ public class RedisSubscriber implements MessageListener {
             // 클라이언트에게 event 데이터 전송
             sseEmitterService.sendAction(channel, actionRequest);
         } catch (IOException e) {
-            log.error("IOException is occurred. ", e);
+            log.error("[RedisSubscriber] IOException is occurred. ", e);
         }
     }
 }
