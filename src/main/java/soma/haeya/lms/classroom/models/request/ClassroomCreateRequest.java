@@ -1,4 +1,4 @@
-package soma.haeya.lms.classroom.model.request;
+package soma.haeya.lms.classroom.models.request;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -7,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ClassroomCreateRequest {
 
-    private final Long userId;
+    private final Long accountId;
     private final String name;
     private String inviteLink;
 
