@@ -7,13 +7,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class MyClassroomResponse {
 
-    private Long classroomId;
+    private Long id;
     private String name;
-    private Long guestCount;
+    private Long totalPeople;
 
-    public MyClassroomResponse(Long classroomId, String name, Long guestCount) {
-        this.classroomId = classroomId;
+    public MyClassroomResponse(Long id, String name, Long totalPeople) {
+        this.id = id;
         this.name = name;
-        this.guestCount = guestCount;
+        this.totalPeople = totalPeople;
     }
 }

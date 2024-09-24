@@ -11,9 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
 import soma.edupilms._config.advice.AccountId;
 import soma.edupilms.classroom.models.ClassroomCreateRequest;
 import soma.edupilms.classroom.models.ClassroomCreateResponse;
-import soma.edupilms.classroom.models.MyClassroomsWithCountResponse;
+import soma.edupilms.classroom.models.MyClassroomsResponse;
 import soma.edupilms.classroom.service.ClassroomService;
-import soma.edupilms.web.models.response.SuccessResponse;
 
 @RestController
 @RequiredArgsConstructor
@@ -23,21 +22,19 @@ public class ClassroomController {
     private final ClassroomService classroomService;
 
     @PostMapping
-    public ResponseEntity<SuccessResponse<ClassroomCreateResponse>> createClassroom(
+    public ResponseEntity<ClassroomCreateResponse> createClassroom(
         @AccountId @RequestBody ClassroomCreateRequest createClassroomRequest
     ) {
         ClassroomCreateResponse classroomResponse = classroomService.createClassroom(createClassroomRequest);
 
-        return ResponseEntity.ok(new SuccessResponse<>(classroomResponse));
+        return ResponseEntity.ok(classroomResponse);
     }
 
     @GetMapping
-    public ResponseEntity<SuccessResponse<MyClassroomsWithCountResponse>> getMyClassrooms(
-        @RequestHeader("X-User-Id") Long userId
-    ) {
-        MyClassroomsWithCountResponse myClassrooms = classroomService.getMyClassrooms(userId);
+    public ResponseEntity<MyClassroomsResponse> getMyClassrooms(@RequestHeader("X-Account-Id") Long accountId) {
+        MyClassroomsResponse myClassrooms = classroomService.getMyClassrooms(accountId);
 
-        return ResponseEntity.ok(new SuccessResponse<>(myClassrooms));
+        return ResponseEntity.ok(myClassrooms);
     }
 
 }
