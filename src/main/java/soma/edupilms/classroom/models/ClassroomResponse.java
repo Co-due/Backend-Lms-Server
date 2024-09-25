@@ -5,10 +5,8 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class ClassroomCreateResponse {
+public class ClassroomResponse {
 
     private Long id;
     private String name;
-    private String inviteLink;
-
 }
