@@ -12,12 +12,8 @@ import soma.edupilms.web.client.DbServerApiClient;
 public class ClassroomService {
 
     private final DbServerApiClient dbServerApiClient;
-    private final InviteLinkService inviteLinkService;
 
     public ClassroomCreateResponse createClassroom(ClassroomCreateRequest createClassroomRequest) {
-        String inviteLink = inviteLinkService.makeLink();
-        createClassroomRequest.createInviteLink(inviteLink);
-
         return dbServerApiClient.createClassroom(createClassroomRequest);
     }
 
