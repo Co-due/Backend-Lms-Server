@@ -1,4 +1,4 @@
-package soma.edupilms.web.exception;
+package soma.edupilms.web;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -8,7 +8,9 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.HttpServerErrorException;
-import soma.edupilms.web.models.response.ErrorResponse;
+import soma.edupilms.web.exception.ErrorCode;
+import soma.edupilms.web.exception.UserServerException;
+import soma.edupilms.web.models.ErrorResponse;
 
 @Slf4j
 @RestControllerAdvice
@@ -35,11 +37,11 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(value = UserServerException.class)
     public ResponseEntity<ErrorResponse> handleUserServerException(UserServerException exception) {
-        ErrorResponse errorResponse = new ErrorResponse(exception.getMessage());
+        ErrorCode errorCode = exception.getErrorCode();
 
         return ResponseEntity
-            .status(exception.getHttpStatus())
-            .body(errorResponse);
+            .status(errorCode.getHttpStatus())
+            .body(new ErrorResponse(errorCode.getCode(), errorCode.getDetail()));
     }
 
 }
