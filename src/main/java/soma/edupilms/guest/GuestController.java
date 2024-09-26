@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import soma.edupilms._config.advice.AccountId;
-import soma.edupilms.guest.models.request.RegisterGuestRequest;
-import soma.edupilms.guest.models.response.ClassroomAccountResponse;
+import soma.edupilms.guest.models.ClassroomAccountResponse;
+import soma.edupilms.guest.models.RegisterGuestRequest;
 import soma.edupilms.guest.service.GuestService;
 
 @RestController

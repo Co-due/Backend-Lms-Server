@@ -1,4 +1,4 @@
-package soma.edupilms.guest.models.response;
+package soma.edupilms.guest.models;
 
 import lombok.Getter;
 

@@ -2,9 +2,9 @@ package soma.edupilms.guest.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import soma.edupilms.guest.models.ClassroomAccountResponse;
+import soma.edupilms.guest.models.RegisterGuestRequest;
 import soma.edupilms.web.client.DbServerApiClient;
-import soma.edupilms.guest.models.request.RegisterGuestRequest;
-import soma.edupilms.guest.models.response.ClassroomAccountResponse;
 
 @Service
 @RequiredArgsConstructor

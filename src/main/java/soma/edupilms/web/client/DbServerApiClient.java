@@ -12,8 +12,8 @@ import org.springframework.web.service.annotation.PostExchange;
 import soma.edupilms.classroom.models.ClassroomCreateRequest;
 import soma.edupilms.classroom.models.ClassroomResponse;
 import soma.edupilms.classroom.models.MyClassroom;
-import soma.edupilms.guest.models.request.RegisterGuestRequest;
-import soma.edupilms.guest.models.response.ClassroomAccountResponse;
+import soma.edupilms.guest.models.ClassroomAccountResponse;
+import soma.edupilms.guest.models.RegisterGuestRequest;
 
 @Component
 @HttpExchange("/v1")
