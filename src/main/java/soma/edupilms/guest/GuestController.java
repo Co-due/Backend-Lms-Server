@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import soma.edupilms._config.advice.AccountId;
 import soma.edupilms.guest.models.request.RegisterGuestRequest;
@@ -13,12 +12,11 @@ import soma.edupilms.guest.service.GuestService;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/v1/guest")
 public class GuestController {
 
     private final GuestService guestService;
 
-    @PostMapping
+    @PostMapping("/v1/guest")
     public ResponseEntity<ClassroomAccountResponse> registerGuest(
         @AccountId @RequestBody RegisterGuestRequest registerGuestRequest
     ) {

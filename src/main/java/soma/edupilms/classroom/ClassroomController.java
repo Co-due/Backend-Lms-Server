@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import soma.edupilms._config.advice.AccountId;
 import soma.edupilms.classroom.models.ClassroomCreateRequest;
@@ -22,12 +21,11 @@ import soma.edupilms.web.models.SuccessResponse;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/v1/classroom")
 public class ClassroomController {
 
     private final ClassroomService classroomService;
 
-    @PostMapping
+    @PostMapping("/v1/classroom")
     public ResponseEntity<SuccessResponse> createClassroom(
         @Valid @AccountId @RequestBody ClassroomCreateRequest createClassroomRequest
     ) {
@@ -38,7 +36,7 @@ public class ClassroomController {
             .body(SuccessResponse.withDetailAndResult("success create classroom", classroomResponse));
     }
 
-    @GetMapping
+    @GetMapping("/v1/classroom")
     public ResponseEntity<SuccessResponse> getMyClassrooms(@RequestHeader("X-Account-Id") Long accountId) {
         MyClassroomRoleResponse myClassrooms = classroomService.getMyClassrooms(accountId);
 
@@ -47,7 +45,7 @@ public class ClassroomController {
             .body(SuccessResponse.withDetailAndResult("Success retrieved my classrooms", myClassrooms));
     }
 
-    @PatchMapping("/{classroomId}")
+    @PatchMapping("/v1/classroom/{classroomId}")
     public ResponseEntity<SuccessResponse> updateClassroom(
         @PathVariable Long classroomId,
         @Valid @RequestBody ClassroomUpdateRequest classroomUpdateRequest
