@@ -19,6 +19,8 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(value = HttpClientErrorException.class)
     public ResponseEntity<ErrorResponse> handle4xxError(HttpClientErrorException exception) {
+        printErrorLog(exception);
+
         ErrorResponse errorResponse = exception.getResponseBodyAs(ErrorResponse.class);
 
         return ResponseEntity
@@ -28,6 +30,8 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(value = HttpServerErrorException.class)
     public ResponseEntity<ErrorResponse> handle5xxError(HttpServerErrorException exception) {
+        printErrorLog(exception);
+
         ErrorResponse errorResponse = exception.getResponseBodyAs(ErrorResponse.class);
 
         return ResponseEntity
@@ -37,11 +41,33 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(value = UserServerException.class)
     public ResponseEntity<ErrorResponse> handleUserServerException(UserServerException exception) {
+        printErrorLog(exception);
+
         ErrorCode errorCode = exception.getErrorCode();
 
         return ResponseEntity
             .status(errorCode.getHttpStatus())
             .body(new ErrorResponse(errorCode.getCode(), errorCode.getDetail()));
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<ErrorResponse> handleException(Exception exception) {
+        printErrorLog(exception);
+
+        return ResponseEntity
+            .status(HttpStatus.BAD_REQUEST)
+            .body(new ErrorResponse("DB-400999", "예상하지 못한 에러가 발생했습니다."));
+    }
+
+    private void printErrorLog(Exception exception) {
+        StackTraceElement[] stackTrace = exception.getStackTrace();
+        String className = stackTrace[0].getClassName();
+        String methodName = stackTrace[0].getMethodName();
+
+        String exceptionMessage = exception.getMessage();
+
+        log.info("Exception occurred in class = {}, method = {}, message = {}, exception class = {}",
+            className, methodName, exceptionMessage, exception.getClass().getCanonicalName());
     }
 
 }
