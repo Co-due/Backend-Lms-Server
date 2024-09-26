@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import soma.edupilms.classroom.models.ClassroomCreateRequest;
 import soma.edupilms.classroom.models.ClassroomCreateResponse;
-import soma.edupilms.classroom.models.MyClassroomsWithCountResponse;
+import soma.edupilms.classroom.models.MyClassroomsResponse;
 import soma.edupilms.web.client.DbServerApiClient;
 
 @Service
@@ -21,8 +21,8 @@ public class ClassroomService {
         return dbServerApiClient.createClassroom(createClassroomRequest);
     }
 
-    public MyClassroomsWithCountResponse getMyClassrooms(Long userId) {
+    public MyClassroomsResponse getMyClassrooms(Long accountId) {
 
-        return dbServerApiClient.getMyClassrooms(userId);
+        return dbServerApiClient.getMyClassrooms(accountId);
     }
 }

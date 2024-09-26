@@ -8,7 +8,7 @@ import org.springframework.web.service.annotation.HttpExchange;
 import org.springframework.web.service.annotation.PostExchange;
 import soma.edupilms.classroom.models.ClassroomCreateRequest;
 import soma.edupilms.classroom.models.ClassroomCreateResponse;
-import soma.edupilms.classroom.models.MyClassroomsWithCountResponse;
+import soma.edupilms.classroom.models.MyClassroomsResponse;
 import soma.edupilms.guest.models.request.RegisterGuestRequest;
 import soma.edupilms.guest.models.response.ClassroomAccountResponse;
 
@@ -23,6 +23,6 @@ public interface DbServerApiClient {
     ClassroomAccountResponse registerGuest(@RequestBody RegisterGuestRequest registerGuestRequest);
 
     @GetExchange("/classroom")
-    MyClassroomsWithCountResponse getMyClassrooms(@RequestParam Long userId);
+    MyClassroomsResponse getMyClassrooms(@RequestParam Long accountId);
 
 }

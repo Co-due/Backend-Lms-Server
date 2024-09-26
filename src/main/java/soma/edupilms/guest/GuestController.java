@@ -10,7 +10,6 @@ import soma.edupilms._config.advice.AccountId;
 import soma.edupilms.guest.models.request.RegisterGuestRequest;
 import soma.edupilms.guest.models.response.ClassroomAccountResponse;
 import soma.edupilms.guest.service.GuestService;
-import soma.edupilms.web.models.response.SuccessResponse;
 
 @RestController
 @RequiredArgsConstructor
@@ -20,11 +19,11 @@ public class GuestController {
     private final GuestService guestService;
 
     @PostMapping
-    public ResponseEntity<SuccessResponse<ClassroomAccountResponse>> registerGuest(
+    public ResponseEntity<ClassroomAccountResponse> registerGuest(
         @AccountId @RequestBody RegisterGuestRequest registerGuestRequest
     ) {
         ClassroomAccountResponse classroomAccountResponse = guestService.registerGuest(registerGuestRequest);
 
-        return ResponseEntity.ok(new SuccessResponse<>(classroomAccountResponse));
+        return ResponseEntity.ok(classroomAccountResponse);
     }
 }
