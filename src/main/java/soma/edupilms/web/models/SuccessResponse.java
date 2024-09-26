@@ -10,16 +10,17 @@ import lombok.NoArgsConstructor;
 public class SuccessResponse {
 
     private static final String DEFAULT_CODE = "CM-200000";
+    private static final String DEFAULT_DETAIL = "";
 
     private String code;
     private String detail;
-    private Object result = Collections.EMPTY_MAP;
+    private Object result;
 
     @Builder
     public SuccessResponse(String code, String detail, Object result) {
         this.code = (code != null) ? code : DEFAULT_CODE;
-        this.detail = detail;
-        this.result = result;
+        this.detail = (detail != null) ? detail : DEFAULT_DETAIL;
+        this.result = (result != null) ? result : Collections.EMPTY_MAP;
     }
 
     public static SuccessResponse withDetailAndResult(String detail, Object result) {
@@ -29,9 +30,9 @@ public class SuccessResponse {
             .build();
     }
 
-    public static SuccessResponse withResult(Object result) {
+    public static SuccessResponse withDetail(String detail) {
         return SuccessResponse.builder()
-            .result(result)
+            .detail(detail)
             .build();
     }
 
