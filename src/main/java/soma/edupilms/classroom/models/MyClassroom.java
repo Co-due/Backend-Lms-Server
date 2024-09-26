@@ -2,7 +2,7 @@ package soma.edupilms.classroom.models;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import soma.edupilms.guest.models.ClassroomAccountRole;
+import soma.edupilms.classroom.account.models.ClassroomAccountRole;
 
 @Getter
 @NoArgsConstructor

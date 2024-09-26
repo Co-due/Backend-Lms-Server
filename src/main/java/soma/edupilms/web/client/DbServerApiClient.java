@@ -9,11 +9,11 @@ import org.springframework.web.service.annotation.GetExchange;
 import org.springframework.web.service.annotation.HttpExchange;
 import org.springframework.web.service.annotation.PatchExchange;
 import org.springframework.web.service.annotation.PostExchange;
+import soma.edupilms.classroom.account.models.ClassroomAccountResponse;
+import soma.edupilms.classroom.account.models.RegisterGuestRequest;
 import soma.edupilms.classroom.models.ClassroomCreateRequest;
 import soma.edupilms.classroom.models.ClassroomResponse;
 import soma.edupilms.classroom.models.MyClassroom;
-import soma.edupilms.guest.models.ClassroomAccountResponse;
-import soma.edupilms.guest.models.RegisterGuestRequest;
 
 @Component
 @HttpExchange("/v1")
@@ -29,6 +29,6 @@ public interface DbServerApiClient {
     ClassroomResponse changeClassroomName(@PathVariable Long classroomId, @RequestBody String classroomName);
 
     @PostExchange("/classroom-account")
-    ClassroomAccountResponse registerGuest(@RequestBody RegisterGuestRequest registerGuestRequest);
+    ClassroomAccountResponse registerClassroomAccount(@RequestBody RegisterGuestRequest registerGuestRequest);
 
 }

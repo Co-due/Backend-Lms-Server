@@ -1,4 +1,4 @@
-package soma.edupilms.guest.models;
+package soma.edupilms.classroom.account.models;
 
 import lombok.Getter;
 

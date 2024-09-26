@@ -1,4 +1,4 @@
-package soma.edupilms.guest.models;
+package soma.edupilms.classroom.account.models;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
@@ -12,5 +12,7 @@ public class RegisterGuestRequest {
     private Long classroomId;
     @NotNull
     private Long accountId;
+    @NotNull
+    private ClassroomAccountRole role;
 
 }
