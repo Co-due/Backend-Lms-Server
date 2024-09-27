@@ -13,7 +13,7 @@ import soma.edupilms.classroom.account.models.ClassroomAccountResponse;
 import soma.edupilms.classroom.account.models.RegisterGuestRequest;
 import soma.edupilms.classroom.models.ClassroomCreateRequest;
 import soma.edupilms.classroom.models.ClassroomResponse;
-import soma.edupilms.classroom.models.MyClassroom;
+import soma.edupilms.classroom.models.MyClassroomResponse;
 
 @Component
 @HttpExchange("/v1")
@@ -23,12 +23,12 @@ public interface DbServerApiClient {
     ClassroomResponse createClassroom(@RequestBody ClassroomCreateRequest createClassroomRequest);
 
     @GetExchange("/classroom")
-    List<MyClassroom> getMyClassrooms(@RequestParam Long accountId);
+    List<MyClassroomResponse> getMyClassrooms(@RequestParam Long accountId);
 
     @PatchExchange("/classroom/{classroomId}")
     ClassroomResponse changeClassroomName(@PathVariable Long classroomId, @RequestBody String classroomName);
 
-    @PostExchange("/classroom-account")
+    @PostExchange("/classroom/account")
     ClassroomAccountResponse registerClassroomAccount(@RequestBody RegisterGuestRequest registerGuestRequest);
 
 }

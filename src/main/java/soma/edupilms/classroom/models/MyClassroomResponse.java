@@ -6,14 +6,14 @@ import soma.edupilms.classroom.account.models.ClassroomAccountRole;
 
 @Getter
 @NoArgsConstructor
-public class MyClassroom {
+public class MyClassroomResponse {
 
     private Long id;
     private String name;
     private ClassroomAccountRole role;
     private Long totalPeople;
 
-    public MyClassroom(Long id, String name, ClassroomAccountRole role, Long totalPeople) {
+    public MyClassroomResponse(Long id, String name, ClassroomAccountRole role, Long totalPeople) {
         this.id = id;
         this.name = name;
         this.role = role;

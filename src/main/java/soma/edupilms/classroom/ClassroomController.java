@@ -15,7 +15,7 @@ import soma.edupilms._config.advice.AccountId;
 import soma.edupilms.classroom.models.ClassroomCreateRequest;
 import soma.edupilms.classroom.models.ClassroomResponse;
 import soma.edupilms.classroom.models.ClassroomUpdateRequest;
-import soma.edupilms.classroom.models.MyClassroomRoleResponse;
+import soma.edupilms.classroom.models.MyClassroomsResponse;
 import soma.edupilms.classroom.service.ClassroomService;
 import soma.edupilms.web.models.SuccessResponse;
 
@@ -38,7 +38,7 @@ public class ClassroomController {
 
     @GetMapping("/v1/classroom")
     public ResponseEntity<SuccessResponse> getMyClassrooms(@RequestHeader("X-Account-Id") Long accountId) {
-        MyClassroomRoleResponse myClassrooms = classroomService.getMyClassrooms(accountId);
+        MyClassroomsResponse myClassrooms = classroomService.getMyClassrooms(accountId);
 
         return ResponseEntity
             .status(HttpStatus.OK)
