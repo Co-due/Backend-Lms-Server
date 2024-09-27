@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 import soma.edupilms.progress.models.ActionRequest;
-import soma.edupilms.progress.service.service.SseService;
+import soma.edupilms.progress.service.SseService;
 
 @RestController
 @RequiredArgsConstructor

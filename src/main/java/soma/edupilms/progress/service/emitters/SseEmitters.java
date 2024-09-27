@@ -1,4 +1,4 @@
-package soma.edupilms.progress.service.service.emitters;
+package soma.edupilms.progress.service.emitters;
 
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;

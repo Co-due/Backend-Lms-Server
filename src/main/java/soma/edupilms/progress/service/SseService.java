@@ -1,11 +1,11 @@
-package soma.edupilms.progress.service.service;
+package soma.edupilms.progress.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 import soma.edupilms.progress.models.ActionRequest;
-import soma.edupilms.progress.service.service.emitters.SseEmitters;
+import soma.edupilms.progress.service.emitters.SseEmitters;
 
 @Slf4j
 @Service

@@ -1,4 +1,4 @@
-package soma.edupilms.progress.service.service;
+package soma.edupilms.progress.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
@@ -12,7 +12,7 @@ import org.springframework.data.redis.listener.RedisMessageListenerContainer;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 import soma.edupilms.progress.models.ActionRequest;
-import soma.edupilms.progress.service.service.emitters.SseEmitters;
+import soma.edupilms.progress.service.emitters.SseEmitters;
 
 @Slf4j
 @Service
@@ -47,7 +47,7 @@ public class RedisService {
         return CHANNEL_PREFIX + classroomId;
     }
 
-    public class RedisSubscriber implements MessageListener {
+    public static class RedisSubscriber implements MessageListener {
 
         private final ObjectMapper objectMapper = new ObjectMapper();
         private final SseEmitters sseEmitters;
