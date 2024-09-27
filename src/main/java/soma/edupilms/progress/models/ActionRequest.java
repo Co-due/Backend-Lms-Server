@@ -1,15 +1,15 @@
 package soma.edupilms.progress.models;
 
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.NoArgsConstructor;
 import soma.edupilms.progress.service.models.ActionType;
 
 @Getter
-@RequiredArgsConstructor
+@NoArgsConstructor
 public class ActionRequest {
 
-    private final Long classroomId;
-    private final Long classroomAccountId;
-    private final ActionType actionType;
+    private Long classroomId;
+    private Long classroomAccountId;
+    private ActionType actionType;
 
 }
