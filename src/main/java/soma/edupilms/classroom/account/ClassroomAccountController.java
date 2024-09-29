@@ -24,13 +24,7 @@ public class ClassroomAccountController {
         ClassroomAccountResponse classroomAccountResponse = classroomAccountService.registerClassroomAccount(
             registerGuestRequest);
 
-        return ResponseEntity.ok(SuccessResponse.withDetailAndResult("게스트 등록에 성공했습니다.", classroomAccountResponse));
+        return ResponseEntity.ok(
+            SuccessResponse.withDetailAndResult("success create classroom account", classroomAccountResponse));
     }
-
-//    @GetMapping("/v1/classroom/account/guest")
-//    public ResponseEntity<SuccessResponse> getClassroomGuest(
-//        @AccountId @RequestBody RegisterGuestRequest registerGuestRequest
-//    ) {
-//
-//    }
 }

@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.HttpServerErrorException;
 import soma.edupilms.web.exception.BaseException;
-import soma.edupilms.web.exception.ErrorCode;
+import soma.edupilms.web.exception.ErrorEnum;
 import soma.edupilms.web.models.ErrorResponse;
 
 @Slf4j
@@ -43,7 +43,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorResponse> handleUserServerException(BaseException exception) {
         printErrorLog(exception);
 
-        ErrorCode errorCode = exception.getErrorCode();
+        ErrorEnum errorCode = exception.getErrorCode();
 
         return ResponseEntity
             .status(errorCode.getHttpStatus())

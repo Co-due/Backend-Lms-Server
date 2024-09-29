@@ -2,7 +2,7 @@ package soma.edupilms.web.exception;
 
 import org.springframework.http.HttpStatus;
 
-public interface ErrorCode {
+public interface ErrorEnum {
 
     HttpStatus getHttpStatus();
 
