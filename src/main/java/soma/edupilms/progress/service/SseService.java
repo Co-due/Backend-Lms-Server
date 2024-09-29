@@ -4,14 +4,17 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
-import soma.edupilms.progress.models.ActionRequest;
+import soma.edupilms.progress.models.ActionChangeRequest;
 import soma.edupilms.progress.service.emitters.SseEmitters;
+import soma.edupilms.progress.service.models.ActionStatus;
+import soma.edupilms.web.client.DbServerApiClient;
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class SseService {
 
+    private final DbServerApiClient dbServerApiClient;
     private final SseEmitters sseEmitters;
     private final RedisService redisService;
 
@@ -26,8 +29,10 @@ public class SseService {
             .orElseGet(() -> createNewSseEmitter(classroomId));
     }
 
-    public void sendAction(ActionRequest actionRequest) {
-        redisService.publish(actionRequest);
+    public ActionStatus sendAction(ActionChangeRequest actionChangeRequest) {
+        ActionStatus actionStatus = dbServerApiClient.updateAction(actionChangeRequest);
+        redisService.publish(actionChangeRequest);
+        return actionStatus;
     }
 
     private SseEmitter createNewSseEmitter(String classroomId) {

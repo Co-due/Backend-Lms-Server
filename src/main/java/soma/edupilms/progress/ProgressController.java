@@ -9,8 +9,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
-import soma.edupilms.progress.models.ActionRequest;
+import soma.edupilms._config.advice.AccountId;
+import soma.edupilms.progress.models.ActionChangeRequest;
 import soma.edupilms.progress.service.SseService;
+import soma.edupilms.progress.service.models.ActionStatus;
+import soma.edupilms.web.models.SuccessResponse;
 
 @RestController
 @RequiredArgsConstructor
@@ -27,11 +30,12 @@ public class ProgressController {
     }
 
     @PostMapping("/v1/progress/send")
-    public ResponseEntity<Void> send(@RequestBody ActionRequest actionRequest) {
-        System.out.println("actionRequest.getActionType() = " + actionRequest.getActionType());
-        sseService.sendAction(actionRequest);
+    public ResponseEntity<SuccessResponse> send(@AccountId @RequestBody ActionChangeRequest actionChangeRequest) {
+        System.out.println("actionRequest.getActionType() = " + actionChangeRequest.getAction());
+        ActionStatus actionStatus = sseService.sendAction(actionChangeRequest);
 
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok(SuccessResponse.withDetailAndResult("액션이 변경되었습니다.", actionStatus));
+
     }
 
 }

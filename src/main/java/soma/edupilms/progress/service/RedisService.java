@@ -11,7 +11,7 @@ import org.springframework.data.redis.listener.ChannelTopic;
 import org.springframework.data.redis.listener.RedisMessageListenerContainer;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
-import soma.edupilms.progress.models.ActionRequest;
+import soma.edupilms.progress.models.ActionChangeRequest;
 import soma.edupilms.progress.service.emitters.SseEmitters;
 
 @Slf4j
@@ -35,8 +35,9 @@ public class RedisService {
         container.addMessageListener(subscriber, ChannelTopic.of(getChannelName(classroomId)));
     }
 
-    public void publish(ActionRequest actionRequest) {
-        template.convertAndSend(getChannelName(String.valueOf(actionRequest.getClassroomId())), actionRequest);
+    public void publish(ActionChangeRequest actionChangeRequest) {
+        template.convertAndSend(getChannelName(String.valueOf(actionChangeRequest.getClassroomId())),
+            actionChangeRequest);
     }
 
     public void removeSubscribe(String classroomId) {
@@ -65,15 +66,15 @@ public class RedisService {
                 System.out.println("channel = " + channel);
                 System.out.println("message.getBody() = " + Arrays.toString(message.getBody()));
 
-                ActionRequest actionRequest = objectMapper.readValue(
+                ActionChangeRequest actionChangeRequest = objectMapper.readValue(
                     message.getBody(),
-                    ActionRequest.class
+                    ActionChangeRequest.class
                 );
 
                 // 클라이언트에게 event 데이터 전송
                 sseEmitters.findSseEmitter(channel).ifPresent(sseEmitter -> {
                     try {
-                        sseEmitter.send(SseEmitter.event().name("action").data(actionRequest));
+                        sseEmitter.send(SseEmitter.event().name("action").data(actionChangeRequest));
                     } catch (IOException e) {
                         sseEmitters.delete(channel);
                     }
