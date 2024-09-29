@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 import soma.edupilms._config.advice.AccountId;
+import soma.edupilms.classroom.models.ActionInitializeRequest;
 import soma.edupilms.classroom.models.ClassroomCreateRequest;
 import soma.edupilms.classroom.models.ClassroomResponse;
 import soma.edupilms.classroom.models.ClassroomUpdateRequest;
@@ -33,7 +34,7 @@ public class ClassroomController {
 
         return ResponseEntity
             .status(HttpStatus.OK)
-            .body(SuccessResponse.withDetailAndResult("success create classroom", classroomResponse));
+            .body(SuccessResponse.withDetailAndResult("Success create classroom", classroomResponse));
     }
 
     @GetMapping("/v1/classroom")
@@ -43,6 +44,16 @@ public class ClassroomController {
         return ResponseEntity
             .status(HttpStatus.OK)
             .body(SuccessResponse.withDetailAndResult("Success retrieved my classrooms", myClassrooms));
+    }
+
+    @PostMapping("/v1/classroom/action/initialization")
+    public ResponseEntity<SuccessResponse> initializeActionsInClassroom(
+        @RequestBody ActionInitializeRequest actionInitializeRequest) {
+        Long updateCount = classroomService.initializeActionsInClassroom(actionInitializeRequest);
+
+        return ResponseEntity
+            .status(HttpStatus.OK)
+            .body(SuccessResponse.withDetailAndResult("Success update actions in classroom", updateCount));
     }
 
     @PatchMapping("/v1/classroom/{classroomId}")
