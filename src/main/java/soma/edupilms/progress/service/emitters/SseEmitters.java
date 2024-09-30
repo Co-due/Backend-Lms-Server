@@ -1,12 +1,12 @@
-package soma.edupilms.progress.service.sse;
+package soma.edupilms.progress.service.emitters;
 
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
-@Repository
-public class SseEmitterRepository {
+@Component
+public class SseEmitters {
 
     private final ConcurrentHashMap<String, SseEmitter> sseMap = new ConcurrentHashMap<>();
 

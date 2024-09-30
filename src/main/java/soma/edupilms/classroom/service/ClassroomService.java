@@ -3,7 +3,9 @@ package soma.edupilms.classroom.service;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import soma.edupilms.classroom.models.ActionInitRequest;
 import soma.edupilms.classroom.models.ClassroomCreateRequest;
+import soma.edupilms.classroom.models.ClassroomInfoResponse;
 import soma.edupilms.classroom.models.ClassroomResponse;
 import soma.edupilms.classroom.models.MyClassroomResponse;
 import soma.edupilms.classroom.models.MyClassroomsResponse;
@@ -25,8 +27,15 @@ public class ClassroomService {
         return new MyClassroomsResponse(myClassrooms);
     }
 
+    public Long initAllActionsInClassroom(ActionInitRequest actionInitRequest) {
+        return dbServerApiClient.initAllActionStatus(actionInitRequest);
+    }
+
     public ClassroomResponse updateClassroomName(Long classroomId, String classroomName) {
         return dbServerApiClient.changeClassroomName(classroomId, classroomName);
     }
 
+    public ClassroomInfoResponse getClassroomInfo(Long classroomId) {
+        return dbServerApiClient.getClassroomInfo(classroomId);
+    }
 }
