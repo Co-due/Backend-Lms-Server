@@ -15,14 +15,16 @@ import soma.edupilms.web.models.SuccessResponse;
 @RequiredArgsConstructor
 public class ClassroomAccountController {
 
-    private final ClassroomAccountService guestService;
+    private final ClassroomAccountService classroomAccountService;
 
-    @PostMapping("/v1/guest")
-    public ResponseEntity<SuccessResponse> registerGuest(
+    @PostMapping("/v1/classroom/account")
+    public ResponseEntity<SuccessResponse> registerClassroomAccount(
         @AccountId @RequestBody RegisterGuestRequest registerGuestRequest
     ) {
-        ClassroomAccountResponse classroomAccountResponse = guestService.registerClassroomAccount(registerGuestRequest);
+        ClassroomAccountResponse classroomAccountResponse = classroomAccountService.registerClassroomAccount(
+            registerGuestRequest);
 
-        return ResponseEntity.ok(SuccessResponse.withDetailAndResult("게스트 등록에 성공했습니다.", classroomAccountResponse));
+        return ResponseEntity.ok(
+            SuccessResponse.withDetailAndResult("success create classroom account", classroomAccountResponse));
     }
 }

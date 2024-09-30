@@ -5,8 +5,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import soma.edupilms.classroom.models.ClassroomCreateRequest;
 import soma.edupilms.classroom.models.ClassroomResponse;
-import soma.edupilms.classroom.models.MyClassroom;
-import soma.edupilms.classroom.models.MyClassroomRoleResponse;
+import soma.edupilms.classroom.models.MyClassroomResponse;
+import soma.edupilms.classroom.models.MyClassroomsResponse;
 import soma.edupilms.web.client.DbServerApiClient;
 
 @Service
@@ -19,10 +19,10 @@ public class ClassroomService {
         return dbServerApiClient.createClassroom(createClassroomRequest);
     }
 
-    public MyClassroomRoleResponse getMyClassrooms(Long accountId) {
-        List<MyClassroom> myClassrooms = dbServerApiClient.getMyClassrooms(accountId);
+    public MyClassroomsResponse getMyClassrooms(Long accountId) {
+        List<MyClassroomResponse> myClassrooms = dbServerApiClient.getMyClassrooms(accountId);
 
-        return new MyClassroomRoleResponse(myClassrooms);
+        return new MyClassroomsResponse(myClassrooms);
     }
 
     public ClassroomResponse updateClassroomName(Long classroomId, String classroomName) {
