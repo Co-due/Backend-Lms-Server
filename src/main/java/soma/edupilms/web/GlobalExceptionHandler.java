@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.HttpServerErrorException;
+import org.springframework.web.client.ResourceAccessException;
 import soma.edupilms.web.exception.BaseException;
 import soma.edupilms.web.exception.ErrorEnum;
 import soma.edupilms.web.models.ErrorResponse;
@@ -50,13 +51,23 @@ public class GlobalExceptionHandler {
             .body(new ErrorResponse(errorCode.getCode(), errorCode.getDetail()));
     }
 
+    @ExceptionHandler(value = ResourceAccessException.class)
+    public ResponseEntity<ErrorResponse> handleUserServerException(ResourceAccessException exception) {
+        printErrorLog(exception);
+
+        return ResponseEntity
+            .status(HttpStatus.NOT_FOUND)
+            .body(new ErrorResponse("LM-404999", "특정 API에 접근할 수 없습니다."));
+    }
+
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponse> handleException(Exception exception) {
         printErrorLog(exception);
 
         return ResponseEntity
             .status(HttpStatus.BAD_REQUEST)
-            .body(new ErrorResponse("DB-400999", "예상하지 못한 에러가 발생했습니다."));
+            .body(new ErrorResponse("LM-400999", "예상하지 못한 에러가 발생했습니다."));
     }
 
     private void printErrorLog(Exception exception) {
