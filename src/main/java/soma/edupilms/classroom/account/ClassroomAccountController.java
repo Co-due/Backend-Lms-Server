@@ -19,7 +19,7 @@ public class ClassroomAccountController {
 
     @PostMapping("/v1/classroom/account")
     public ResponseEntity<SuccessResponse> registerClassroomAccount(
-        @AccountId @RequestBody RegisterGuestRequest registerGuestRequest
+        @RequestBody RegisterGuestRequest registerGuestRequest
     ) {
         ClassroomAccountResponse classroomAccountResponse = classroomAccountService.registerClassroomAccount(
             registerGuestRequest);

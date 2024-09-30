@@ -13,7 +13,6 @@ public class ClassroomAccountService {
     private final DbServerApiClient dbServerApiClient;
 
     public ClassroomAccountResponse registerClassroomAccount(RegisterGuestRequest registerGuestRequest) {
-
         return dbServerApiClient.registerClassroomAccount(registerGuestRequest);
     }
 
