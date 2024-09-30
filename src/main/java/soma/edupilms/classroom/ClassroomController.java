@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import soma.edupilms._config.advice.AccountId;
-import soma.edupilms.classroom.models.ActionInitializeRequest;
+import soma.edupilms.classroom.models.ActionInitRequest;
 import soma.edupilms.classroom.models.ClassroomCreateRequest;
 import soma.edupilms.classroom.models.ClassroomInfoResponse;
 import soma.edupilms.classroom.models.ClassroomResponse;
@@ -48,10 +48,9 @@ public class ClassroomController {
             .body(SuccessResponse.withDetailAndResult("Success retrieved my classrooms", myClassrooms));
     }
 
-    @PostMapping("/v1/classroom/action/initialization")
-    public ResponseEntity<SuccessResponse> initializeActionsInClassroom(
-        @RequestBody ActionInitializeRequest actionInitializeRequest) {
-        Long updateCount = classroomService.initializeActionsInClassroom(actionInitializeRequest);
+    @PostMapping("/v1/classroom/action/init")
+    public ResponseEntity<SuccessResponse> initAllActionsInClassroom(@RequestBody ActionInitRequest actionInitRequest) {
+        Long updateCount = classroomService.initAllActionsInClassroom(actionInitRequest);
 
         return ResponseEntity
             .status(HttpStatus.OK)

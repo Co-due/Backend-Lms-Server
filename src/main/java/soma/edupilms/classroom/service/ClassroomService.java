@@ -3,7 +3,7 @@ package soma.edupilms.classroom.service;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import soma.edupilms.classroom.models.ActionInitializeRequest;
+import soma.edupilms.classroom.models.ActionInitRequest;
 import soma.edupilms.classroom.models.ClassroomCreateRequest;
 import soma.edupilms.classroom.models.ClassroomInfoResponse;
 import soma.edupilms.classroom.models.ClassroomResponse;
@@ -27,8 +27,8 @@ public class ClassroomService {
         return new MyClassroomsResponse(myClassrooms);
     }
 
-    public Long initializeActionsInClassroom(ActionInitializeRequest actionInitializeRequest) {
-        return dbServerApiClient.initialization(actionInitializeRequest);
+    public Long initAllActionsInClassroom(ActionInitRequest actionInitRequest) {
+        return dbServerApiClient.initAllActionStatus(actionInitRequest);
     }
 
     public ClassroomResponse updateClassroomName(Long classroomId, String classroomName) {

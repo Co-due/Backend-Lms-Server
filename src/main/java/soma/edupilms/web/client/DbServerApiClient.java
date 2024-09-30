@@ -10,7 +10,7 @@ import org.springframework.web.service.annotation.PatchExchange;
 import org.springframework.web.service.annotation.PostExchange;
 import soma.edupilms.classroom.account.models.ClassroomAccountResponse;
 import soma.edupilms.classroom.account.models.RegisterGuestRequest;
-import soma.edupilms.classroom.models.ActionInitializeRequest;
+import soma.edupilms.classroom.models.ActionInitRequest;
 import soma.edupilms.classroom.models.ClassroomCreateRequest;
 import soma.edupilms.classroom.models.ClassroomInfoResponse;
 import soma.edupilms.classroom.models.ClassroomResponse;
@@ -27,8 +27,8 @@ public interface DbServerApiClient {
     @GetExchange("/v1/classroom")
     List<MyClassroomResponse> getMyClassrooms(@RequestParam Long accountId);
 
-    @PostExchange("/v1/classroom/action/initialization")
-    Long initialization(@RequestBody ActionInitializeRequest actionInitializeRequest);
+    @PostExchange("/v1/classroom/action/init")
+    Long initAllActionStatus(@RequestBody ActionInitRequest actionInitRequest);
 
     @PatchExchange("/v1/classroom/{classroomId}")
     ClassroomResponse changeClassroomName(@PathVariable Long classroomId, @RequestBody String classroomName);
