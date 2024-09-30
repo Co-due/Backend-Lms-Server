@@ -10,9 +10,12 @@ import org.springframework.web.service.annotation.PatchExchange;
 import org.springframework.web.service.annotation.PostExchange;
 import soma.edupilms.classroom.account.models.ClassroomAccountResponse;
 import soma.edupilms.classroom.account.models.RegisterGuestRequest;
+import soma.edupilms.classroom.models.ActionInitializeRequest;
 import soma.edupilms.classroom.models.ClassroomCreateRequest;
 import soma.edupilms.classroom.models.ClassroomResponse;
 import soma.edupilms.classroom.models.MyClassroomResponse;
+import soma.edupilms.progress.models.ActionChangeRequest;
+import soma.edupilms.progress.service.models.ActionStatus;
 
 @Component
 public interface DbServerApiClient {
