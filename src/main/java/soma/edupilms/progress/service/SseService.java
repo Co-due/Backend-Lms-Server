@@ -43,7 +43,7 @@ public class SseService {
         sseEmitter.onError(e -> sseEmitter.complete());
 
         sseEmitter.onCompletion(() -> {
-            System.out.println("[Sse connection closes] classroomId = " + classroomId);
+            log.info("[Sse connection closes] classroomId = {}", classroomId);
             sseEmitters.delete(classroomId);
             redisService.removeSubscribe(classroomId);
         });
