@@ -11,7 +11,7 @@ public class RegisterGuestRequest {
     @NotNull
     private Long classroomId;
     @NotNull
-    private Long accountId;
+    private String email;
     @NotNull
     private ClassroomAccountRole role;
 

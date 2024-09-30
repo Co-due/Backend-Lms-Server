@@ -36,6 +36,9 @@ public interface DbServerApiClient {
     @PostExchange("/v1/classroom/account")
     ClassroomAccountResponse registerClassroomAccount(@RequestBody RegisterGuestRequest registerGuestRequest);
 
+    @GetExchange("/v1/classroom/account")
+    List<ClassroomAccountResponse> getClassroomAccountBy(@RequestParam Long classroomId);
+
     @PostExchange("/v1/classroom/account/action")
     ActionStatus updateAction(@RequestBody ActionChangeRequest actionChangeRequest);
 
