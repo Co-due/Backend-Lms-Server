@@ -1,6 +1,5 @@
 package soma.edupilms.classroom.account;
 
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import soma.edupilms.classroom.account.models.ClassroomAccountResponse;
+import soma.edupilms.classroom.account.models.GuestsResponse;
 import soma.edupilms.classroom.account.models.RegisterGuestRequest;
 import soma.edupilms.classroom.account.service.ClassroomAccountService;
 import soma.edupilms.web.models.SuccessResponse;
@@ -32,8 +32,7 @@ public class ClassroomAccountController {
 
     @GetMapping("/v1/classroom/account")
     public ResponseEntity<SuccessResponse> getClassroomAccount(@RequestParam Long classroomId) {
-        List<ClassroomAccountResponse> classroomAccountResponses =
-            classroomAccountService.getAllClassroomAccounts(classroomId);
+        GuestsResponse classroomAccountResponses = classroomAccountService.getAllClassroomAccounts(classroomId);
 
         return ResponseEntity.ok(
             SuccessResponse.withDetailAndResult(
