@@ -10,10 +10,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import soma.edupilms._config.advice.AccountId;
 import soma.edupilms.classroom.models.ActionInitializeRequest;
 import soma.edupilms.classroom.models.ClassroomCreateRequest;
+import soma.edupilms.classroom.models.ClassroomInfoResponse;
 import soma.edupilms.classroom.models.ClassroomResponse;
 import soma.edupilms.classroom.models.ClassroomUpdateRequest;
 import soma.edupilms.classroom.models.MyClassroomsResponse;
@@ -69,6 +71,15 @@ public class ClassroomController {
         return ResponseEntity
             .status(HttpStatus.OK)
             .body(SuccessResponse.withDetailAndResult("Success update classroomName", updatedClassroom));
+    }
+
+    @GetMapping("/v1/classroom/info")
+    public ResponseEntity<SuccessResponse> getClassroomInfo(@RequestParam Long classroomId) {
+        ClassroomInfoResponse classroomInfoResponse = classroomService.getClassroomInfo(classroomId);
+
+        return ResponseEntity
+            .status(HttpStatus.OK)
+            .body(SuccessResponse.withDetailAndResult("Success retrieved classroom info", classroomInfoResponse));
     }
 
 }

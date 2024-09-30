@@ -12,6 +12,7 @@ import soma.edupilms.classroom.account.models.ClassroomAccountResponse;
 import soma.edupilms.classroom.account.models.RegisterGuestRequest;
 import soma.edupilms.classroom.models.ActionInitializeRequest;
 import soma.edupilms.classroom.models.ClassroomCreateRequest;
+import soma.edupilms.classroom.models.ClassroomInfoResponse;
 import soma.edupilms.classroom.models.ClassroomResponse;
 import soma.edupilms.classroom.models.MyClassroomResponse;
 import soma.edupilms.progress.models.ActionChangeRequest;
@@ -38,4 +39,6 @@ public interface DbServerApiClient {
     @PostExchange("/v1/classroom/account/action")
     ActionStatus updateAction(@RequestBody ActionChangeRequest actionChangeRequest);
 
+    @GetExchange("/v1/classroom/info")
+    ClassroomInfoResponse getClassroomInfo(@RequestParam Long classroomId);
 }
