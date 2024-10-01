@@ -10,14 +10,14 @@ import soma.edupilms.classroom.account.models.ClassroomAccountRole;
 @NoArgsConstructor
 public class MyClassroomsResponse {
 
-    private List<MyClassroomResponse> host = new ArrayList<>();
-    private List<MyClassroomResponse> guest = new ArrayList<>();
+    private List<MyClassroomResponse> hosts = new ArrayList<>();
+    private List<MyClassroomResponse> guests = new ArrayList<>();
 
     public MyClassroomsResponse(List<MyClassroomResponse> myClassrooms) {
-        host = myClassrooms.stream()
+        hosts = myClassrooms.stream()
             .filter(myClassroom -> myClassroom.getRole().equals(ClassroomAccountRole.HOST))
             .toList();
-        guest = myClassrooms.stream()
+        guests = myClassrooms.stream()
             .filter(myClassroom -> myClassroom.getRole().equals(ClassroomAccountRole.GUEST))
             .toList();
     }

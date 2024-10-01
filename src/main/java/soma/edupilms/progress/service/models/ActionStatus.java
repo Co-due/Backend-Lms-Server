@@ -6,7 +6,7 @@ import lombok.Getter;
 
 @Getter
 public enum ActionStatus {
-    ING(0), HELP(1), COMPLETE(2);
+    DEFAULT(0), ING(1), HELP(2), COMPLETE(3);
 
     private final int value;
 
