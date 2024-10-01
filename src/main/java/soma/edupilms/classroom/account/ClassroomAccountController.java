@@ -1,7 +1,9 @@
 package soma.edupilms.classroom.account;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -26,18 +28,35 @@ public class ClassroomAccountController {
         ClassroomAccountResponse classroomAccountResponse = classroomAccountService.registerClassroomAccount(
             registerGuestRequest);
 
-        return ResponseEntity.ok(
-            SuccessResponse.withDetailAndResult("success create classroom account", classroomAccountResponse));
+        return ResponseEntity
+            .status(HttpStatus.OK)
+            .body(SuccessResponse.withDetailAndResult(
+                "success create classroom account",
+                classroomAccountResponse
+            ));
+
     }
 
     @GetMapping("/v1/classroom/account")
     public ResponseEntity<SuccessResponse> getClassroomAccount(@RequestParam Long classroomId) {
         GuestsResponse classroomAccountResponses = classroomAccountService.getAllClassroomAccounts(classroomId);
 
-        return ResponseEntity.ok(
-            SuccessResponse.withDetailAndResult(
+        return ResponseEntity
+            .status(HttpStatus.OK)
+            .body(SuccessResponse.withDetailAndResult(
                 "success retrieved classroom account by classroomId",
                 classroomAccountResponses
+            ));
+    }
+
+    @DeleteMapping("/v1/classroom/account")
+    public ResponseEntity<SuccessResponse> deleteClassroomAccount(@RequestParam Long classroomAccountId) {
+        classroomAccountService.deleteClassroomAccount(classroomAccountId);
+
+        return ResponseEntity
+            .status(HttpStatus.OK)
+            .body(SuccessResponse.withDetail(
+                "success delete classroom account"
             ));
     }
 }

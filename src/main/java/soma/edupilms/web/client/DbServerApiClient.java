@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.service.annotation.DeleteExchange;
 import org.springframework.web.service.annotation.GetExchange;
 import org.springframework.web.service.annotation.PatchExchange;
 import org.springframework.web.service.annotation.PostExchange;
@@ -38,6 +39,9 @@ public interface DbServerApiClient {
 
     @GetExchange("/v1/classroom/account")
     List<ClassroomAccountResponse> getClassroomAccountBy(@RequestParam Long classroomId);
+
+    @DeleteExchange("/v1/classroom/account")
+    void deleteClassroomAccount(@RequestParam Long classroomAccountId);
 
     @PostExchange("/v1/classroom/account/action")
     ActionStatus updateAction(@RequestBody ActionChangeRequest actionChangeRequest);
