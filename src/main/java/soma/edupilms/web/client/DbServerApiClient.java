@@ -43,6 +43,9 @@ public interface DbServerApiClient {
     @GetExchange("/v1/classroom/account")
     List<ClassroomAccountResponse> getClassroomAccountBy(@RequestParam Long classroomId);
 
+    @DeleteExchange("/v1/classroom/account")
+    void deleteClassroomAccount(@RequestParam Long classroomAccountId);
+
     @PostExchange("/v1/classroom/account/action")
     ActionStatus updateAction(@RequestBody ActionChangeRequest actionChangeRequest);
 

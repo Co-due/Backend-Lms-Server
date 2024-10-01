@@ -23,4 +23,8 @@ public class ClassroomAccountService {
         return new GuestsResponse(guests);
     }
 
+    public void deleteClassroomAccount(Long classroomAccountId) {
+        dbServerApiClient.deleteClassroomAccount(classroomAccountId);
+    }
+
 }
