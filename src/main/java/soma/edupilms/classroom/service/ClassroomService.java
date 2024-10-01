@@ -27,6 +27,10 @@ public class ClassroomService {
         return new MyClassroomsResponse(myClassrooms);
     }
 
+    public void deleteClassroom(Long classroomId) {
+        dbServerApiClient.deleteClassroom(classroomId);
+    }
+
     public Long initAllActionsInClassroom(ActionInitRequest actionInitRequest) {
         return dbServerApiClient.initAllActionStatus(actionInitRequest);
     }
