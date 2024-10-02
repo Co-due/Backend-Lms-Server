@@ -51,4 +51,7 @@ public interface DbServerApiClient {
 
     @GetExchange("/v1/classroom/info")
     ClassroomInfoResponse getClassroomInfo(@RequestParam Long classroomId);
+
+    @GetExchange("/v1/classroom/account/action")
+    ActionStatus getActionStatus(@RequestParam Long classroomId, @RequestParam Long accountId);
 }

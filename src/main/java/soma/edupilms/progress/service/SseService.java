@@ -35,6 +35,18 @@ public class SseService {
         return actionStatus;
     }
 
+    public ActionStatus getAction(Long classroomId, Long accountId) {
+        ActionStatus actionStatus = dbServerApiClient.getActionStatus(classroomId, accountId);
+        if (actionStatus == ActionStatus.DEFAULT) {
+            ActionChangeRequest actionChangeRequest = new ActionChangeRequest(classroomId, accountId, ActionStatus.ING);
+            actionStatus = dbServerApiClient.updateAction(actionChangeRequest);
+
+            sendAction(actionChangeRequest);
+        }
+
+        return actionStatus;
+    }
+
     private SseEmitter createNewSseEmitter(String classroomId) {
         final SseEmitter sseEmitter = new SseEmitter(TIME_OUT);
 
