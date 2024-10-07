@@ -49,6 +49,19 @@ public class ClassroomAccountController {
             ));
     }
 
+    @GetMapping("/v1/classroom/account/progress")
+    public ResponseEntity<SuccessResponse> getClassroomAccountWithoutDefaultAction(@RequestParam Long classroomId) {
+        GuestsResponse classroomAccountResponses =
+            classroomAccountService.getClassroomAccountsWithoutDefaultAction(classroomId);
+
+        return ResponseEntity
+            .status(HttpStatus.OK)
+            .body(SuccessResponse.withDetailAndResult(
+                "success retrieved classroom account without default action by classroomId",
+                classroomAccountResponses
+            ));
+    }
+
     @DeleteMapping("/v1/classroom/account")
     public ResponseEntity<SuccessResponse> deleteClassroomAccount(@RequestParam Long classroomAccountId) {
         classroomAccountService.deleteClassroomAccount(classroomAccountId);

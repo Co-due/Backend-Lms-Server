@@ -1,5 +1,6 @@
 package soma.edupilms.progress.service;
 
+import java.io.IOException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -20,13 +21,13 @@ public class SseService {
 
     private static final Long TIME_OUT = 60 * 1000L; // 1분
 
-    public SseEmitter createOrGetConnection(String classroomId) {
+    public SseEmitter createOrGetConnection(String classroomId, Long accountId) {
 
         redisService.subscribe(classroomId);
 
         // sseEmitter 가져오기 없으면 만들어서 반환
         return sseEmitters.findSseEmitter(classroomId)
-            .orElseGet(() -> createNewSseEmitter(classroomId));
+            .orElseGet(() -> createNewSseEmitter(classroomId, accountId));
     }
 
     public ActionStatus sendAction(ActionChangeRequest actionChangeRequest) {
@@ -35,7 +36,19 @@ public class SseService {
         return actionStatus;
     }
 
-    private SseEmitter createNewSseEmitter(String classroomId) {
+    public ActionStatus getAction(Long classroomId, Long accountId) {
+        ActionStatus actionStatus = dbServerApiClient.getActionStatus(classroomId, accountId);
+        if (actionStatus == ActionStatus.DEFAULT) {
+            ActionChangeRequest actionChangeRequest = new ActionChangeRequest(classroomId, accountId, ActionStatus.ING);
+            actionStatus = dbServerApiClient.updateAction(actionChangeRequest);
+
+            sendAction(actionChangeRequest);
+        }
+
+        return actionStatus;
+    }
+
+    private SseEmitter createNewSseEmitter(String classroomId, Long accountId) {
         final SseEmitter sseEmitter = new SseEmitter(TIME_OUT);
 
         sseEmitters.create(classroomId, sseEmitter);
@@ -48,6 +61,12 @@ public class SseService {
             redisService.removeSubscribe(classroomId);
         });
 
+        try {
+            sseEmitter.send(SseEmitter.event().name("action")
+                .data(new ActionChangeRequest(Long.parseLong(classroomId), accountId, ActionStatus.DEFAULT)));
+        } catch (IOException e) {
+            sseEmitters.delete(classroomId);
+        }
         return sseEmitter;
     }
 }

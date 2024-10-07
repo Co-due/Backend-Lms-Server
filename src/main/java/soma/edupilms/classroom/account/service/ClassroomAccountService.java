@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import soma.edupilms.classroom.account.models.ClassroomAccountResponse;
 import soma.edupilms.classroom.account.models.GuestsResponse;
 import soma.edupilms.classroom.account.models.RegisterGuestRequest;
+import soma.edupilms.progress.service.models.ActionStatus;
 import soma.edupilms.web.client.DbServerApiClient;
 
 @Service
@@ -21,6 +22,16 @@ public class ClassroomAccountService {
     public GuestsResponse getAllClassroomAccounts(Long classroomId) {
         List<ClassroomAccountResponse> guests = dbServerApiClient.getClassroomAccountBy(classroomId);
         return new GuestsResponse(guests);
+    }
+
+    public GuestsResponse getClassroomAccountsWithoutDefaultAction(Long classroomId) {
+        List<ClassroomAccountResponse> guests = dbServerApiClient.getClassroomAccountBy(classroomId);
+
+        List<ClassroomAccountResponse> filteredGuests = guests.stream()
+            .filter(guest -> !guest.getStatus().equals(ActionStatus.DEFAULT))
+            .toList();
+
+        return new GuestsResponse(filteredGuests);
     }
 
     public void deleteClassroomAccount(Long classroomAccountId) {

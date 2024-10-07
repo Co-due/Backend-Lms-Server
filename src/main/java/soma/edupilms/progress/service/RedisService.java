@@ -2,7 +2,6 @@ package soma.edupilms.progress.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
-import java.util.Arrays;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.connection.Message;
 import org.springframework.data.redis.connection.MessageListener;
@@ -62,9 +61,6 @@ public class RedisService {
             try {
                 String channel = new String(message.getChannel())
                     .substring(CHANNEL_PREFIX.length());
-
-                System.out.println("channel = " + channel);
-                System.out.println("message.getBody() = " + Arrays.toString(message.getBody()));
 
                 ActionChangeRequest actionChangeRequest = objectMapper.readValue(
                     message.getBody(),
