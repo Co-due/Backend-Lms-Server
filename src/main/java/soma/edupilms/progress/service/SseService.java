@@ -8,14 +8,14 @@ import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 import soma.edupilms.progress.models.ActionChangeRequest;
 import soma.edupilms.progress.service.emitters.SseEmitters;
 import soma.edupilms.progress.service.models.ActionStatus;
-import soma.edupilms.web.client.DbServerApiClient;
+import soma.edupilms.web.client.MetaServerApiClient;
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class SseService {
 
-    private final DbServerApiClient dbServerApiClient;
+    private final MetaServerApiClient metaServerApiClient;
     private final SseEmitters sseEmitters;
     private final RedisService redisService;
 
@@ -31,16 +31,17 @@ public class SseService {
     }
 
     public ActionStatus sendAction(ActionChangeRequest actionChangeRequest) {
-        ActionStatus actionStatus = dbServerApiClient.updateAction(actionChangeRequest);
+        ActionStatus actionStatus = metaServerApiClient.updateAction(actionChangeRequest);
         redisService.publish(actionChangeRequest);
         return actionStatus;
     }
 
+    //Todo 메서드 명 변경
     public ActionStatus getAction(Long classroomId, Long accountId) {
-        ActionStatus actionStatus = dbServerApiClient.getActionStatus(classroomId, accountId);
+        ActionStatus actionStatus = metaServerApiClient.getActionStatus(classroomId, accountId);
         if (actionStatus == ActionStatus.DEFAULT) {
             ActionChangeRequest actionChangeRequest = new ActionChangeRequest(classroomId, accountId, ActionStatus.ING);
-            actionStatus = dbServerApiClient.updateAction(actionChangeRequest);
+            actionStatus = metaServerApiClient.updateAction(actionChangeRequest);
 
             sendAction(actionChangeRequest);
         }

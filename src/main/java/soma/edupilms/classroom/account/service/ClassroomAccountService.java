@@ -7,25 +7,25 @@ import soma.edupilms.classroom.account.models.ClassroomAccountResponse;
 import soma.edupilms.classroom.account.models.GuestsResponse;
 import soma.edupilms.classroom.account.models.RegisterGuestRequest;
 import soma.edupilms.progress.service.models.ActionStatus;
-import soma.edupilms.web.client.DbServerApiClient;
+import soma.edupilms.web.client.MetaServerApiClient;
 
 @Service
 @RequiredArgsConstructor
 public class ClassroomAccountService {
 
-    private final DbServerApiClient dbServerApiClient;
+    private final MetaServerApiClient metaServerApiClient;
 
     public ClassroomAccountResponse registerClassroomAccount(RegisterGuestRequest registerGuestRequest) {
-        return dbServerApiClient.registerClassroomAccount(registerGuestRequest);
+        return metaServerApiClient.registerClassroomAccount(registerGuestRequest);
     }
 
     public GuestsResponse getAllClassroomAccounts(Long classroomId) {
-        List<ClassroomAccountResponse> guests = dbServerApiClient.getClassroomAccountBy(classroomId);
+        List<ClassroomAccountResponse> guests = metaServerApiClient.getClassroomAccountBy(classroomId);
         return new GuestsResponse(guests);
     }
 
     public GuestsResponse getClassroomAccountsWithoutDefaultAction(Long classroomId) {
-        List<ClassroomAccountResponse> guests = dbServerApiClient.getClassroomAccountBy(classroomId);
+        List<ClassroomAccountResponse> guests = metaServerApiClient.getClassroomAccountBy(classroomId);
 
         List<ClassroomAccountResponse> filteredGuests = guests.stream()
             .filter(guest -> !guest.getStatus().equals(ActionStatus.DEFAULT))
@@ -35,7 +35,7 @@ public class ClassroomAccountService {
     }
 
     public void deleteClassroomAccount(Long classroomAccountId) {
-        dbServerApiClient.deleteClassroomAccount(classroomAccountId);
+        metaServerApiClient.deleteClassroomAccount(classroomAccountId);
     }
 
 }
