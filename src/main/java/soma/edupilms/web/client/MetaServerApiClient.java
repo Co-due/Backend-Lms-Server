@@ -20,7 +20,7 @@ import soma.edupilms.progress.models.ActionChangeRequest;
 import soma.edupilms.progress.service.models.ActionStatus;
 
 @Component
-public interface DbServerApiClient {
+public interface MetaServerApiClient {
 
     @PostExchange("/v1/classroom")
     ClassroomResponse createClassroom(@RequestBody ClassroomCreateRequest createClassroomRequest);

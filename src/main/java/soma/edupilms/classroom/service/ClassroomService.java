@@ -9,37 +9,37 @@ import soma.edupilms.classroom.models.ClassroomInfoResponse;
 import soma.edupilms.classroom.models.ClassroomResponse;
 import soma.edupilms.classroom.models.MyClassroomResponse;
 import soma.edupilms.classroom.models.MyClassroomsResponse;
-import soma.edupilms.web.client.DbServerApiClient;
+import soma.edupilms.web.client.MetaServerApiClient;
 
 @Service
 @RequiredArgsConstructor
 public class ClassroomService {
 
-    private final DbServerApiClient dbServerApiClient;
+    private final MetaServerApiClient metaServerApiClient;
 
     public ClassroomResponse createClassroom(ClassroomCreateRequest createClassroomRequest) {
-        return dbServerApiClient.createClassroom(createClassroomRequest);
+        return metaServerApiClient.createClassroom(createClassroomRequest);
     }
 
     public MyClassroomsResponse getMyClassrooms(Long accountId) {
-        List<MyClassroomResponse> myClassrooms = dbServerApiClient.getMyClassrooms(accountId);
+        List<MyClassroomResponse> myClassrooms = metaServerApiClient.getMyClassrooms(accountId);
 
         return new MyClassroomsResponse(myClassrooms);
     }
 
     public void deleteClassroom(Long classroomId) {
-        dbServerApiClient.deleteClassroom(classroomId);
+        metaServerApiClient.deleteClassroom(classroomId);
     }
 
     public Long initAllActionsInClassroom(ActionInitRequest actionInitRequest) {
-        return dbServerApiClient.initAllActionStatus(actionInitRequest);
+        return metaServerApiClient.initAllActionStatus(actionInitRequest);
     }
 
     public ClassroomResponse updateClassroomName(Long classroomId, String classroomName) {
-        return dbServerApiClient.changeClassroomName(classroomId, classroomName);
+        return metaServerApiClient.changeClassroomName(classroomId, classroomName);
     }
 
     public ClassroomInfoResponse getClassroomInfo(Long classroomId) {
-        return dbServerApiClient.getClassroomInfo(classroomId);
+        return metaServerApiClient.getClassroomInfo(classroomId);
     }
 }
