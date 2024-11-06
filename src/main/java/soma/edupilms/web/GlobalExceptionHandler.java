@@ -40,7 +40,9 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(value = MetaServerException.class)
     public ResponseEntity<ErrorResponse> handleMetaServerException(MetaServerException exception) {
-        printErrorLog(exception);
+        log.error("[Meta Exception] code={}, message={}, detail message={}", exception.getErrorCode().getCode(),
+            exception.getErrorCode().getDetails(),
+            exception.getMessage());
 
         return ResponseEntity
             .status(HttpStatus.BAD_REQUEST)
