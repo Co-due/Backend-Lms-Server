@@ -9,6 +9,7 @@ import org.springframework.web.service.annotation.DeleteExchange;
 import org.springframework.web.service.annotation.GetExchange;
 import org.springframework.web.service.annotation.PatchExchange;
 import org.springframework.web.service.annotation.PostExchange;
+import soma.edupilms.classroom.account.models.CheckClassroomAccountRole;
 import soma.edupilms.classroom.account.models.ClassroomAccountResponse;
 import soma.edupilms.classroom.account.models.RegisterGuestRequest;
 import soma.edupilms.classroom.models.ActionInitRequest;
@@ -54,4 +55,7 @@ public interface MetaServerApiClient {
 
     @GetExchange("/v1/classroom/account/action")
     ActionStatus getActionStatus(@RequestParam Long classroomId, @RequestParam Long accountId);
+
+    @GetExchange("/v1/classroom/account/role")
+    CheckClassroomAccountRole checkClassroomAccountRole(@RequestParam Long accountId, @RequestParam Long classroomId);
 }

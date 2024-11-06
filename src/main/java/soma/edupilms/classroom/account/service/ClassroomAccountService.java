@@ -3,6 +3,7 @@ package soma.edupilms.classroom.account.service;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import soma.edupilms.classroom.account.models.CheckClassroomAccountRole;
 import soma.edupilms.classroom.account.models.ClassroomAccountResponse;
 import soma.edupilms.classroom.account.models.GuestsResponse;
 import soma.edupilms.classroom.account.models.RegisterGuestRequest;
@@ -28,8 +29,8 @@ public class ClassroomAccountService {
         List<ClassroomAccountResponse> guests = metaServerApiClient.getClassroomAccountBy(classroomId);
 
         List<ClassroomAccountResponse> filteredGuests = guests.stream()
-            .filter(guest -> !guest.getStatus().equals(ActionStatus.DEFAULT))
-            .toList();
+                .filter(guest -> !guest.getStatus().equals(ActionStatus.DEFAULT))
+                .toList();
 
         return new GuestsResponse(filteredGuests);
     }
@@ -38,4 +39,7 @@ public class ClassroomAccountService {
         metaServerApiClient.deleteClassroomAccount(classroomAccountId);
     }
 
+    public CheckClassroomAccountRole checkClassroomAccountRole(Long accountId, Long classroomId) {
+        return metaServerApiClient.checkClassroomAccountRole(accountId, classroomId);
+    }
 }
