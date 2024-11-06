@@ -31,10 +31,10 @@ public class ClassroomAccountService {
             if (errorResponse == null) {
                 throw new MetaServerException(ErrorEnum.NOT_MATCH_ERROR);
             }
-            if (errorResponse.getCode().equals("DB-400101")) {
-                throw new ClassroomAccountException(ErrorEnum.CLASSROOM_NOT_FOUND);
-            } else if (errorResponse.getCode().equals("DB-400001")) {
+            if (errorResponse.getCode().equals("DB-400001")) {
                 throw new ClassroomAccountException(ErrorEnum.EMAIL_NOT_MATCH);
+            } else if (errorResponse.getCode().equals("DB-400101")) {
+                throw new ClassroomAccountException(ErrorEnum.CLASSROOM_NOT_FOUND);
             } else if (errorResponse.getCode().equals("DB-400201")) {
                 throw new ClassroomAccountException(ErrorEnum.ALREADY_REGISTER);
             } else {
