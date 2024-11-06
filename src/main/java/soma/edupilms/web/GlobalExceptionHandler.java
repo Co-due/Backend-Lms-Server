@@ -22,14 +22,20 @@ import soma.edupilms.web.models.ErrorResponse;
 @RequiredArgsConstructor
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler({AccountException.class, ClassroomException.class, ClassroomAccountException.class,
-        SseException.class})
-    public ResponseEntity<ErrorResponse> handleMetaServerException(BaseException exception) {
+    @ExceptionHandler({
+        AccountException.class,
+        ClassroomException.class,
+        ClassroomAccountException.class,
+        SseException.class
+    })
+    public ResponseEntity<ErrorResponse> handelDomainException(BaseException exception) {
         printErrorLog(exception);
+
+        ErrorEnum errorCode = exception.getErrorCode();
 
         return ResponseEntity
             .status(HttpStatus.BAD_REQUEST)
-            .body(new ErrorResponse(exception.getErrorCode().getCode(), exception.getErrorCode().getDetails()));
+            .body(new ErrorResponse(errorCode.getCode(), errorCode.getDetails()));
     }
 
     @ExceptionHandler(value = MetaServerException.class)
@@ -42,7 +48,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(value = BaseException.class)
-    public ResponseEntity<ErrorResponse> handleUserServerException(BaseException exception) {
+    public ResponseEntity<ErrorResponse> handelBaseException(BaseException exception) {
         printErrorLog(exception);
 
         ErrorEnum errorCode = exception.getErrorCode();
@@ -53,12 +59,12 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(value = ResourceAccessException.class)
-    public ResponseEntity<ErrorResponse> handleUserServerException(ResourceAccessException exception) {
+    public ResponseEntity<ErrorResponse> handleResourceAccessException(ResourceAccessException exception) {
         printErrorLog(exception);
 
         return ResponseEntity
             .status(HttpStatus.NOT_FOUND)
-            .body(new ErrorResponse("LM-404999", "특정 API에 접근할 수 없습니다."));
+            .body(new ErrorResponse("LM-404999", "Cannot access a specific API."));
     }
 
 
@@ -69,7 +75,7 @@ public class GlobalExceptionHandler {
         return ResponseEntity
             .status(HttpStatus.BAD_REQUEST)
             .contentType(MediaType.APPLICATION_JSON)
-            .body(new ErrorResponse("LM-400999", "예상하지 못한 에러가 발생했습니다."));
+            .body(new ErrorResponse("LM-400999", "Unexpected error has occurred."));
     }
 
     private void printErrorLog(Exception exception) {
