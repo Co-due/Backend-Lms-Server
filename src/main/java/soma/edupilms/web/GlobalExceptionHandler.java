@@ -1,5 +1,6 @@
 package soma.edupilms.web;
 
+import javax.security.auth.login.AccountException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -7,11 +8,13 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import org.springframework.web.client.HttpClientErrorException;
-import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.ResourceAccessException;
+import soma.edupilms.classroom.account.exception.ClassroomAccountException;
+import soma.edupilms.classroom.exception.ClassroomException;
+import soma.edupilms.progress.exception.SseException;
 import soma.edupilms.web.exception.BaseException;
 import soma.edupilms.web.exception.ErrorEnum;
+import soma.edupilms.web.exception.MetaServerException;
 import soma.edupilms.web.models.ErrorResponse;
 
 @Slf4j
@@ -19,26 +22,23 @@ import soma.edupilms.web.models.ErrorResponse;
 @RequiredArgsConstructor
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(value = HttpClientErrorException.class)
-    public ResponseEntity<ErrorResponse> handle4xxError(HttpClientErrorException exception) {
+    @ExceptionHandler({AccountException.class, ClassroomException.class, ClassroomAccountException.class,
+        SseException.class})
+    public ResponseEntity<ErrorResponse> handleMetaServerException(BaseException exception) {
         printErrorLog(exception);
-
-        ErrorResponse errorResponse = exception.getResponseBodyAs(ErrorResponse.class);
-
-        return ResponseEntity
-            .status(exception.getStatusCode())
-            .body(errorResponse);
-    }
-
-    @ExceptionHandler(value = HttpServerErrorException.class)
-    public ResponseEntity<ErrorResponse> handle5xxError(HttpServerErrorException exception) {
-        printErrorLog(exception);
-
-        ErrorResponse errorResponse = exception.getResponseBodyAs(ErrorResponse.class);
 
         return ResponseEntity
             .status(HttpStatus.BAD_REQUEST)
-            .body(errorResponse);
+            .body(new ErrorResponse(exception.getErrorCode().getCode(), exception.getErrorCode().getDetails()));
+    }
+
+    @ExceptionHandler(value = MetaServerException.class)
+    public ResponseEntity<ErrorResponse> handleMetaServerException(MetaServerException exception) {
+        printErrorLog(exception);
+
+        return ResponseEntity
+            .status(HttpStatus.BAD_REQUEST)
+            .body(new ErrorResponse(ErrorEnum.TASK_FAIL.getCode(), ErrorEnum.TASK_FAIL.getDetails()));
     }
 
     @ExceptionHandler(value = BaseException.class)
@@ -48,8 +48,8 @@ public class GlobalExceptionHandler {
         ErrorEnum errorCode = exception.getErrorCode();
 
         return ResponseEntity
-            .status(errorCode.getHttpStatus())
-            .body(new ErrorResponse(errorCode.getCode(), errorCode.getDetail()));
+            .status(errorCode.getStatus())
+            .body(new ErrorResponse(errorCode.getCode(), errorCode.getDetails()));
     }
 
     @ExceptionHandler(value = ResourceAccessException.class)

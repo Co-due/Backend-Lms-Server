@@ -8,7 +8,7 @@ public class BaseException extends RuntimeException {
     private final ErrorEnum errorCode;
 
     public BaseException(ErrorEnum errorCode) {
-        super(errorCode.getDetail());
+        super(errorCode.getDetails());
         this.errorCode = errorCode;
     }
 }

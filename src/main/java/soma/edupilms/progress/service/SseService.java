@@ -4,11 +4,18 @@ import java.io.IOException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
+import soma.edupilms.classroom.exception.ClassroomException;
+import soma.edupilms.progress.exception.SseException;
 import soma.edupilms.progress.models.ActionChangeRequest;
 import soma.edupilms.progress.service.emitters.SseEmitters;
 import soma.edupilms.progress.service.models.ActionStatus;
 import soma.edupilms.web.client.MetaServerApiClient;
+import soma.edupilms.web.exception.ErrorEnum;
+import soma.edupilms.web.exception.MetaServerException;
+import soma.edupilms.web.models.ErrorResponse;
 
 @Slf4j
 @Service
@@ -31,17 +38,73 @@ public class SseService {
     }
 
     public ActionStatus sendAction(ActionChangeRequest actionChangeRequest) {
-        ActionStatus actionStatus = metaServerApiClient.updateAction(actionChangeRequest);
+        ActionStatus actionStatus;
+        try {
+            actionStatus = metaServerApiClient.updateAction(actionChangeRequest);
+        } catch (HttpClientErrorException e) {
+            ErrorResponse errorResponse = e.getResponseBodyAs(ErrorResponse.class);
+            if (errorResponse == null) {
+                throw new MetaServerException(ErrorEnum.NOT_MATCH_ERROR);
+            }
+            if (errorResponse.getCode().equals("DB-400101")) {
+                throw new SseException(ErrorEnum.CLASSROOM_NOT_FOUND);
+            } else if (errorResponse.getCode().equals("DB-400203")) {
+                throw new SseException(ErrorEnum.HOST_CAN_NOT_UPDATE_ACTION_STATUS);
+            } else {
+                throw new MetaServerException(ErrorEnum.NOT_MATCH_ERROR);
+            }
+        } catch (ResourceAccessException e) {
+            throw new ClassroomException(ErrorEnum.RESOURCE_ACCESS_EXCEPTION);
+        } catch (Exception e) {
+            throw new ClassroomException(ErrorEnum.TASK_FAIL);
+        }
         redisService.publish(actionChangeRequest);
         return actionStatus;
     }
 
     //Todo 메서드 명 변경
     public ActionStatus getAction(Long classroomId, Long accountId) {
-        ActionStatus actionStatus = metaServerApiClient.getActionStatus(classroomId, accountId);
+        ActionStatus actionStatus;
+
+        try {
+            actionStatus = metaServerApiClient.getActionStatus(classroomId, accountId);
+
+        } catch (HttpClientErrorException e) {
+            ErrorResponse errorResponse = e.getResponseBodyAs(ErrorResponse.class);
+            if (errorResponse == null) {
+                throw new MetaServerException(ErrorEnum.NOT_MATCH_ERROR);
+            }
+            if (errorResponse.getCode().equals("DB-400101")) {
+                throw new SseException(ErrorEnum.CLASSROOM_NOT_FOUND);
+            } else {
+                throw new MetaServerException(ErrorEnum.NOT_MATCH_ERROR);
+            }
+        } catch (ResourceAccessException e) {
+            throw new ClassroomException(ErrorEnum.RESOURCE_ACCESS_EXCEPTION);
+        } catch (Exception e) {
+            throw new ClassroomException(ErrorEnum.TASK_FAIL);
+        }
         if (actionStatus == ActionStatus.DEFAULT) {
             ActionChangeRequest actionChangeRequest = new ActionChangeRequest(classroomId, accountId, ActionStatus.ING);
-            actionStatus = metaServerApiClient.updateAction(actionChangeRequest);
+            try {
+                actionStatus = metaServerApiClient.updateAction(actionChangeRequest);
+            } catch (HttpClientErrorException e) {
+                ErrorResponse errorResponse = e.getResponseBodyAs(ErrorResponse.class);
+                if (errorResponse == null) {
+                    throw new MetaServerException(ErrorEnum.NOT_MATCH_ERROR);
+                }
+                if (errorResponse.getCode().equals("DB-400101")) {
+                    throw new SseException(ErrorEnum.CLASSROOM_NOT_FOUND);
+                } else if (errorResponse.getCode().equals("DB-400203")) {
+                    throw new SseException(ErrorEnum.HOST_CAN_NOT_UPDATE_ACTION_STATUS);
+                } else {
+                    throw new MetaServerException(ErrorEnum.NOT_MATCH_ERROR);
+                }
+            } catch (ResourceAccessException e) {
+                throw new ClassroomException(ErrorEnum.RESOURCE_ACCESS_EXCEPTION);
+            } catch (Exception e) {
+                throw new ClassroomException(ErrorEnum.TASK_FAIL);
+            }
 
             sendAction(actionChangeRequest);
         }
