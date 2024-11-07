@@ -62,7 +62,6 @@ public class SseService {
         return actionStatus;
     }
 
-    //Todo 메서드 명 변경
     public ActionStatus getAction(Long classroomId, Long accountId) {
         ActionStatus actionStatus;
 
