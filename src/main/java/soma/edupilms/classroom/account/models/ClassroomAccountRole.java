@@ -3,8 +3,8 @@ package soma.edupilms.classroom.account.models;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.Getter;
-import soma.edupilms.classroom.account.exception.ClassroomAccountErrorEnum;
 import soma.edupilms.classroom.account.exception.ClassroomAccountException;
+import soma.edupilms.web.exception.ErrorEnum;
 
 @Getter
 public enum ClassroomAccountRole {
@@ -23,7 +23,7 @@ public enum ClassroomAccountRole {
                 return role;
             }
         }
-        throw new ClassroomAccountException(ClassroomAccountErrorEnum.INVALID_VALUE);
+        throw new ClassroomAccountException(ErrorEnum.INVALID_VALUE);
     }
 
     @JsonValue
