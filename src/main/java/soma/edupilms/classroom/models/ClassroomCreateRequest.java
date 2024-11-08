@@ -12,7 +12,7 @@ public class ClassroomCreateRequest {
     @NotNull
     private Long accountId;
     @NotNull
-    @Size(min = 2, message = "클래스룸 이름은 2글자 이상이어야 합니다.")
+    @Size(min = 2, message = "The classroom name must be at least 2 characters long.")
     private String name;
 
 }
