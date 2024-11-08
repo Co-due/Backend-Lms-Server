@@ -3,9 +3,11 @@ package soma.edupilms.web;
 import javax.security.auth.login.AccountException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.client.ResourceAccessException;
@@ -69,6 +71,22 @@ public class GlobalExceptionHandler {
             .body(new ErrorResponse("LM-404999", "Cannot access a specific API."));
     }
 
+    // ClassroomCreateRequest @Size
+    @ExceptionHandler(value = MethodArgumentNotValidException.class)
+    public ResponseEntity<ErrorResponse> handleMethodArgumentNotValidException(
+        MethodArgumentNotValidException exception
+    ) {
+        String errorMessage = exception.getBindingResult().getAllErrors().stream()
+            .findFirst()
+            .map(DefaultMessageSourceResolvable::getDefaultMessage)
+            .orElse("Validation failed");
+
+        printErrorLog(exception);
+
+        return ResponseEntity
+            .status(ErrorEnum.INVALID_VALUE.getStatus())
+            .body(new ErrorResponse(ErrorEnum.INVALID_VALUE.getCode(), errorMessage));
+    }
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponse> handleException(Exception exception) {
