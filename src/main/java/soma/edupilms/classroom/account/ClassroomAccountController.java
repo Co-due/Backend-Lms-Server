@@ -91,4 +91,19 @@ public class ClassroomAccountController {
                         checkClassroomAccountRole
                 ));
     }
+
+    @GetMapping("/v1/classroom/account/code")
+    public ResponseEntity<SuccessResponse> code(
+            @RequestParam Long classroomAccountId
+    ) {
+        String code = classroomAccountService.getClassroomAccountCode(classroomAccountId);
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(SuccessResponse.withDetailAndResult(
+                        "success find classroom account code",
+                        code
+                ));
+    }
+
 }
