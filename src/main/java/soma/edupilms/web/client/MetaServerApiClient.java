@@ -47,6 +47,9 @@ public interface MetaServerApiClient {
     @DeleteExchange("/v1/classroom/account")
     void deleteClassroomAccount(@RequestParam Long classroomAccountId);
 
+    @PostExchange("/v1/classroom/account/code")
+    Long saveCode(@RequestBody ActionChangeRequest actionChangeRequest);
+
     @PostExchange("/v1/classroom/account/action")
     ActionStatus updateAction(@RequestBody ActionChangeRequest actionChangeRequest);
 
