@@ -40,7 +40,9 @@ public class SseService {
     public ActionStatus sendAction(ActionChangeRequest actionChangeRequest) {
         ActionStatus actionStatus;
         try {
+            saveCode(actionChangeRequest);
             actionStatus = metaServerApiClient.updateAction(actionChangeRequest);
+
         } catch (HttpClientErrorException e) {
             ErrorResponse errorResponse = e.getResponseBodyAs(ErrorResponse.class);
             if (errorResponse == null) {
@@ -60,6 +62,17 @@ public class SseService {
         }
         redisService.publish(actionChangeRequest);
         return actionStatus;
+    }
+
+    private void saveCode(ActionChangeRequest actionChangeRequest) {
+        if (actionChangeRequest.getAction() == ActionStatus.HELP
+            || actionChangeRequest.getAction() == ActionStatus.COMPLETE
+        ) {
+            Long classroomId = metaServerApiClient.saveCode(actionChangeRequest);
+        } else if (actionChangeRequest.getAction() == ActionStatus.ING) {
+            actionChangeRequest.changeEmptyCode();
+            Long classroomId = metaServerApiClient.saveCode(actionChangeRequest);
+        }
     }
 
     public ActionStatus getAction(Long classroomId, Long accountId) {
@@ -84,7 +97,8 @@ public class SseService {
             throw new ClassroomException(ErrorEnum.TASK_FAIL);
         }
         if (actionStatus == ActionStatus.DEFAULT) {
-            ActionChangeRequest actionChangeRequest = new ActionChangeRequest(classroomId, accountId, ActionStatus.ING);
+            ActionChangeRequest actionChangeRequest =
+                new ActionChangeRequest(classroomId, accountId, "", ActionStatus.ING);
             try {
                 actionStatus = metaServerApiClient.updateAction(actionChangeRequest);
             } catch (HttpClientErrorException e) {
@@ -126,7 +140,7 @@ public class SseService {
 
         try {
             sseEmitter.send(SseEmitter.event().name("action")
-                .data(new ActionChangeRequest(Long.parseLong(classroomId), accountId, ActionStatus.DEFAULT)));
+                .data(new ActionChangeRequest(Long.parseLong(classroomId), accountId, "", ActionStatus.DEFAULT)));
         } catch (IOException e) {
             sseEmitters.delete(classroomId);
         }

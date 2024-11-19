@@ -108,4 +108,9 @@ public class ClassroomAccountService {
             throw new ClassroomException(ErrorEnum.TASK_FAIL);
         }
     }
+
+    public String getClassroomAccountCode(Long classroomAccountId) {
+        return metaServerApiClient.getCode(classroomAccountId);
+    }
+    
 }
